@@ -1,0 +1,15 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Édition d'un carousel | Carousels | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {{ include('admin/carousel/edit/_header.html.twig') }}
+
+    {{ include('admin/carousel/edit/_content.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/admin/create.js'}) }}
+{% endblock %}

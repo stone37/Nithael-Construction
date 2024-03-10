@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "nithael-construction",
+  "private_key_id": "54d1bc4d61b782217319f9f58320942c9b02b445",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDtQLejMw+5AqTp\nklG6w9ffuhhjO0hSDpAIXY7i0R+rOmy7cKoF9zUz+l3Sg7XqONAzEwZFG1RPE54m\n3isIVuYL7A3lSBrny5PaPRh3dhh2hMez8u4Q8ZroMsOb7eX/rnJAxw8wfmHu3QhA\nsvSZel4jqeq9njYmsu7YWhy0GOTNVcX1LQ0SE/seoincUby33IqMOiPw/gZ+jhvm\npK0TazazInpGqxMUSUT8L3Ja8y+kfoz2n6lWQRK3kWFAZQmksxqfMKhjuOXrjZ6f\n03FeYrm3zR4Ei8nXE+dt2wf6GZ7dvns7gyv/VaCmDLvikqgdOrod25LjK0yFOYZ4\nYKATxsmbAgMBAAECggEAPnEgg87eDfrgrWqpoQaHS+Y+IevJ2nLjvJfnEdIpTBcJ\n5AFAdmZ8Naxowg2RNM50GWUh6tFJDLDkmGUznTPFwxCDDbu+/Q+q367hwBswUA0d\nREKlHoeAFim6KtFfjb37awoY+NHic4vv7ptK3hQDL866LeK0bNX+H6oD0PCWU2YE\nbXpHX0mEYIG+QHM7Tc2URgZBPXmEsV+VmfBi4fP2bgk0sc7qBayut0/FhPPE9SN5\n+gmlenLSzgsheV7IdebimKFA718LTaK4aSnrnV4y6jY/wT71qbgk0yrBPF7Q5ZWb\n7hg5yRiAVSIWeGIIliw3mGDB175xZJxaOVQZGZ+zWQKBgQD/x3RQBIBUu3Qhu3HQ\n8AgFqiRYY6ttF1ttnR5r8rkJOGBj773PzJNp6M9ae0dF22ObfVLNEh2onmTDwElo\n66M/XrL+KdYzp8kg6rLB3/OnG2xYX+V2xmmz1RMfaxGhBTuKAiFJUVkLl20jny1N\nIbfV8t2cFgDgve5vk1m1eRDRUwKBgQDtdSrWbJp9V4UNn9yquIH1xNTV8+nKdus3\ns0fF1M3tIAzQCnPUQvkIHQmghP2n+mN++8Ips8RZN7orWBryloFDYduNvDwMmsFh\niC57/QITxRRUWQrCwUOCjvCGT6QMxU5XrK/BT3J1G6X5qdlrVcwcE2r9OlplM+cJ\nERZ23x61mQKBgBbO3lxUSm1D2fM4F8od3VlD9sG7AYpUzt5TaGcP2dgsosvGkRJ6\nl5qWHAdhftWH3rX60utedi6XET0zZFhqyr/X3fY0HNm2WIUK6K3JHp0EIQEwa/HP\nd5WFppLipUvKf6iqz/UNv/b8pcrLYurB2vbFFWXZwHJJ/X0Nkq5QAWPpAoGAQvjs\n4BU5bWilyjXwUuY/IUYmkUF+CvCHXupdr9pZSivj8TlBefh5rGQkNvXLZPkl3sa6\n+HAPTOp+w4LR9uGkC5EqD0ur1BJBwHRcR/QQBetr1G5Yrp07oTMXe4oyxrdPZUL7\nPxZdPdJSeZwCClfkfXaskkdG/4wn+VKsd1JuouECgYEAgLM4p9t0TR5fwBZpTLLB\nd9FwN/uBJD8UXRGwyUNHiN0FcbW4jbcTncPghsdtMc3/ldkGIWD7h9VDdZ7461bq\nWXKvW4aRxKu/T9DaqrGHpRnJfOFExgwpUptAKUoDs0khznT9sOT4zhGJbVh+Mdjw\nnOi6u/qRTjD30suv3k7AF34=\n-----END PRIVATE KEY-----\n",
+  "client_email": "nithael-construction@nithael-construction.iam.gserviceaccount.com",
+  "client_id": "102783310236042857967",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/nithael-construction%40nithael-construction.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

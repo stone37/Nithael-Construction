@@ -1,0 +1,9 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %} Nouveau compte administrateur | Comptes administrateur | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {{ include('admin/admin/create/_header.html.twig') }}
+
+    {{ include('admin/admin/create/_content.html.twig') }}
+{% endblock %}

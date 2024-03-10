@@ -1,0 +1,31 @@
+{% set settings = config.get %}
+{% set url = app.request.getSchemeAndHttpHost() ~ '' ~ app.request.requestUri %}
+{% set subject = 'Voici une offre que j\'ai trouver sur ' ~ settings.name %}
+
+<section>
+    <div class="card mb-5">
+        <div class="card-body p-3">
+            <h4 class="h4-responsive font-weight-bold text-dark mb-4">Partager</h4>
+
+            <div class="d-flex justify-content-center justify-content-lg-between">
+                <a class="btn-floating btn-fb z-depth-0 btn-md"
+                   data-sharer="facebook" data-hashtag="{{ settings.name|slug('')|lower }}" data-url="{{ url }}">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a class="btn-floating btn-tw z-depth-0 btn-md"
+                   data-sharer="twitter" data-hashtags="{{ settings.name|slug('')|lower }}" data-url="{{ url }}">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a class="btn-floating btn-whatsapp z-depth-0 btn-md"
+                   data-sharer="whatsapp" data-url="{{ url }}">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a class="btn-floating btn-mdb-color z-depth-0 btn-md"
+                   data-sharer="email" data-url="{{ url }}" data-subject="{{ subject }}">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+

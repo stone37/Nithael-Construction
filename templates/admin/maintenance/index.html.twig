@@ -1,0 +1,12 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Maintenance | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {{ include('admin/maintenance/index/_header.html.twig') }}
+
+    {{ include('ui/_flashes_message.html.twig') }}
+
+    {{ include('admin/maintenance/index/_content.html.twig') }}
+{% endblock %}
+

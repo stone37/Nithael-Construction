@@ -1,0 +1,306 @@
+<section class="row">
+    <div class="col-12">
+        <h4 class="h4-responsive font-weight-stone-600 text-dark mb-4">Ramassage et livraison</h4>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left pl-4">
+                    <a href="{{ path('app_admin_pickup_index') }}" type="button" class="btn-floating btn-lg blue ml-2">
+                        <i class="fas fa-truck-pickup" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-0">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold pr-3 text-dark">{{ pickupReady }}</h5>
+                    <p class="font-small font-weight-normal pr-3">Nouveaux ramassages</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left pl-4">
+                    <a href="{{ path('app_admin_pickup_index') }}" type="button"  class="btn-floating btn-lg success-color ml-2">
+                        <i class="fas fa-truck-pickup" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-0">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ pickup }}</h5>
+                    <p class="font-small font-weight-normal pr-3">Anciens ramassages</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left pl-4">
+                    <a href="{{ path('app_admin_delivery_index') }}" type="button" class="btn-floating btn-lg blue ml-2">
+                        <i class="fas fa-shipping-fast" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-0">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ deliveryReady }}</h5>
+                    <p class="font-small font-weight-normal pr-3">Nouvelles livraisons</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left">
+                    <a href="{{ path('app_admin_delivery_index') }}" type="button"  class="btn-floating btn-lg success-color ml-2">
+                        <i class="fas fa-shipping-fast" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-0">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ shipped }}</h5>
+                    <p class="font-small font-weight-normal pr-3">Anciennes livraisons</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title h5-responsive font-weight-stone-600 text-center text-dark">Nouveaux ramassage</h5>
+                <div class="">
+                    {% if lastPickups|length > 0 %}
+                        <ul class="list-group list-group-flush px-0">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="font-weight-stone-600">État</div>
+                                <div class=""></div>
+                            </li>
+
+                            {% for pickup in lastPickups %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="badge badge-info z-depth-0">{{ pickup.statusText }}</div>
+                                        <div class="small grey-text font-weight-stone-500">Ramassé le {{ pickup.pickupDate|date('d/m/Y') }} entre {{ pickup.pickupTime }}</div>
+                                    </div>
+                                    <div>
+                                        <a href="{{ path('app_admin_pickup_show', {'id': pickup.id}) }}" class="btn btn-grey btn-sm">
+                                            <i class="fas fa-eye mr-1"></i> Lister
+                                        </a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="text-center mt-4 mb-3 text-dark">Aucun ramassage pour le moment</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title h5-responsive text-dark font-weight-stone-600 text-center">Nouvelles livraison</h5>
+
+                {% if lastDeliveries|length > 0 %}
+                    <ul class="list-group list-group-flush p-0">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="font-weight-stone-600">État</div>
+                            <div class=""></div>
+                        </li>
+
+                        {% for delivery in lastDeliveries %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="badge badge-info z-depth-0">{{ delivery.statusText }}</div>
+                                    <div class="small grey-text font-weight-stone-500">Livré le {{ delivery.deliveryDate|date('d/m/Y') }} entre {{ delivery.deliveryTime }}</div>
+                                </div>
+                                <div>
+                                    <a href="{{ path('app_admin_delivery_show', {'id': delivery.id}) }}" class="btn btn-grey btn-sm">
+                                        <i class="fas fa-eye mr-1"></i> Lister
+                                    </a>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="text-center mt-4 mb-3 text-dark">Aucune commande pour le moment</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="row mt-md-4">
+    <div class="col-12">
+        <h4 class="h4-responsive font-weight-stone-600 text-dark mb-4">
+            Utilisateurs, newsletters, commandes, ...
+        </h4>
+    </div>
+    <div class="col-lg-4 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left">
+                    <a href="{{ path('app_admin_user_index') }}" type="button" class="btn-floating btn-lg bg-primary ml-2">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-2">
+                    <h5  class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ users }}</h5>
+                    <p class="font-small pr-3">Utilisateur(s)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-4 col-5 text-left">
+                    <a href="{{ path('app_admin_payment_index') }}" type="button" class="btn-floating btn-lg success-color-dark ml-2">
+                        <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-md-8 col-7 text-right mb-2">
+                    <h5 class="ml-4 mt-4 mb-2 font-weight-bold text-dark pr-3">{{ orders }}</h5>
+                    <p class="font-small pr-3">Commande payée</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title h5-responsive font-weight-stone-600 text-center text-dark">Nouveaux clients</h5>
+                <div class="">
+                    {% if lastClients|length > 0 %}
+                        <ul class="list-group list-group-flush px-0">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="font-weight-stone-500">Nom</div>
+                                <div class=""></div>
+                            </li>
+
+                            {% for user in lastClients %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="">
+                                        <div class="">{{ user.firstname ~' '~ user.lastname }}</div>
+                                        <div class="small grey-text font-weight-500">{{ user.email }}</div>
+                                    </div>
+                                    <div>
+                                        <a href="{{ path('app_admin_user_show', {'id': user.id, 'type': 1}) }}" class="btn btn-grey btn-sm">
+                                            <i class="fas fa-eye mr-1"></i> Lister
+                                        </a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="text-center mt-4 mb-3 text-dark">Aucun client pour le moment</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title h5-responsive text-dark font-weight-stone-600 text-center">Nouvelles commandes validées</h5>
+
+                {% if lastOrders|length > 0 %}
+                    <table class="table table-responsive-md btn-table">
+                        <thead>
+                            <tr>
+                                <th class="font-weight-stone-500">Commande</th>
+                                <th class="font-weight-stone-500">Produits</th>
+                                <th class="font-weight-stone-500">Total</th>
+                                <th class="font-weight-stone-500"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for payment in lastOrders %}
+                            <tr>
+                                <th scope="row">
+                                    <div>
+                                        {{ payment.commande.owner.firstname ~' '~ payment.commande.owner.lastname }}
+                                    </div>
+                                    <div class="small grey-text font-weight-500">{{ payment.commande.owner.email }}</div>
+                                </th>
+                                <td>{{ payment.commande.owner|length }}</td>
+                                <td>{{ payment.amount|format_currency('XOF') }}</td>
+                                <td>
+                                    <a href="{{ path('app_admin_commande_show', {'id': payment.commande.id}) }}" class="btn btn-grey btn-sm m-0">
+                                        <i class="fas fa-eye mr-1"></i> Lister
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="text-center mt-4 mb-3 text-dark">Aucune commande pour le moment</div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title h5-responsive text-dark font-weight-stone-600 text-center">Commandes validées 30 derniers jours</h5>
+                <div class="my-4 px-2">
+                    <canvas id="orderDailyLineChart" style="width: 100% !important; height: 375px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title h5-responsive text-dark font-weight-stone-600 text-center">Commandes validées 24 derniers mois</h5>
+                <div class="my-4 px-2">
+                    <canvas id="orderMonthlyLineChart" style="width: 100% !important; height: 375px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mt-4 mb-5">
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title h5-responsive text-dark font-weight-stone-600 text-center mb-4">Actions</h5>
+                    <div class="mt-3">
+                        <form action="{{ path('app_admin_cache_clean') }}" method="post">
+                            <button class="btn btn-small btn-danger"><i class="fas fa-trash mr-2"></i> Vider le cache</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title h5-responsive text-primary text-center mb-4">
+                        <a href="https://www.mail-tester.com/" rel="noreferrer" class="card-link">Tester les emails</a>
+                    </h5>
+
+                    <div class="mt-3">
+                        <form action="{{ path('app_admin_mailtest') }}" method="post" class="flex stretch">
+                            <div class="md-form md-outline form-lg input-with-pre-icon">
+                                <i class="fas fa-envelope input-prefix"></i>
+                                <input type="text" placeholder="Email" name="email" id="inputEmail"
+                                       class="form-control form-control-lg" required>
+                                <label for="inputEmail"></label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Envoyer <i class="fas fa-paper-plane ml-2"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

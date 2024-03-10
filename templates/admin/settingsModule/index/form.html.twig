@@ -1,0 +1,100 @@
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Blog</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start parent-data">
+            <div class="col-12">
+                <div class="my-2 title">{{ form.activeBlog.vars.label }}</div>
+                {% for item in form.activeBlog.vars.choices %}
+                    {% set state = (entity.activeBlog == form.activeBlog.vars.choices[loop.index0].value) %}
+                    <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                        <input class="form-check-input with-gap" value="{{ form.activeBlog.vars.choices[loop.index0].value }}" type="radio"
+                               name="{{ form.activeBlog.vars.full_name }}" id="{{ form.activeBlog.vars.id }}_{{ loop.index0 }}"
+                               {% if state %}checked{% endif %} />
+                        <label class="form-check-label" for="{{ form.activeBlog.vars.id }}_{{ loop.index0 }}">{{ form.activeBlog.vars.choices[loop.index0].label }}</label>
+                    </div>
+                {% endfor %}
+                <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeBlog) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Témoignage</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start parent-data">
+            <div class="col-12">
+                <div class="my-2 title">{{ form.activeReview.vars.label }}</div>
+                {% for item in form.activeReview.vars.choices %}
+                    {% set state = entity.activeReview == form.activeReview.vars.choices[loop.index0].value %}
+                    <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                        <input class="form-check-input with-gap" value="{{ form.activeReview.vars.choices[loop.index0].value }}" type="radio"
+                               name="{{ form.activeReview.vars.full_name }}" id="{{ form.activeReview.vars.id }}_{{ loop.index0 }}"
+                               {% if state %}checked{% endif %} />
+                        <label class="form-check-label" for="{{ form.activeReview.vars.id }}_{{ loop.index0 }}">{{ form.activeReview.vars.choices[loop.index0].label }}</label>
+                    </div>
+                {% endfor %}
+                <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeReview) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Réalisation</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start parent-data">
+            <div class="col-12">
+                <div class="my-2 title">{{ form.activeAchieve.vars.label }}</div>
+                {% for item in form.activeAchieve.vars.choices %}
+                    {% set state = entity.activeAchieve == form.activeAchieve.vars.choices[loop.index0].value %}
+                    <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                        <input class="form-check-input with-gap" value="{{ form.activeAchieve.vars.choices[loop.index0].value }}" type="radio"
+                               name="{{ form.activeAchieve.vars.full_name }}" id="{{ form.activeAchieve.vars.id }}_{{ loop.index0 }}"
+                               {% if state %}checked{% endif %} />
+                        <label class="form-check-label" for="{{ form.activeAchieve.vars.id }}_{{ loop.index0 }}">{{ form.activeAchieve.vars.choices[loop.index0].label }}</label>
+                    </div>
+                {% endfor %}
+                <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeAchieve) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Équipe</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start parent-data">
+            <div class="col-12">
+                <div class="my-2 title">{{ form.activeTeam.vars.label }}</div>
+                {% for item in form.activeTeam.vars.choices %}
+                    {% set state = entity.activeTeam == form.activeTeam.vars.choices[loop.index0].value %}
+                    <div class="form-check form-check-inline data {% if state %}active{% endif %}">
+                        <input class="form-check-input with-gap" value="{{ form.activeTeam.vars.choices[loop.index0].value }}" type="radio"
+                               name="{{ form.activeTeam.vars.full_name }}" id="{{ form.activeTeam.vars.id }}_{{ loop.index0 }}"
+                               {% if state %}checked{% endif %} />
+                        <label class="form-check-label" for="{{ form.activeTeam.vars.id }}_{{ loop.index0 }}">{{ form.activeTeam.vars.choices[loop.index0].label }}</label>
+                    </div>
+                {% endfor %}
+                <div class="red-text font-weight-stone-500 mt-2">{{ form_errors(form.activeTeam) }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+

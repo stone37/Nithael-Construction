@@ -1,0 +1,16 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Nouveau carousel | Carousels | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {{ include('admin/carousel/create/_header.html.twig') }}
+
+    {{ include('admin/carousel/create/_content.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/admin/create.js'}) }}
+{% endblock %}
+

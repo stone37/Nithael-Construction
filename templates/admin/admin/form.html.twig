@@ -1,0 +1,51 @@
+<div class="form-row mb-2">
+    <div class="col-12">
+        <div class="h5-responsive" style="border-bottom: 1.8px solid #212121">
+            <div class="badge badge-dark d-inline-block mr-1" style="position: relative; bottom: 6px;">1</div>
+            <div class="text-dark d-inline-block font-weight-stone-500">Information de base</div>
+        </div>
+    </div>
+</div>
+<div class="row d-flex justify-content-center justify-content-md-start">
+    <div class="col-12 col-md-4">
+        {{ form_row(form.lastname) }}
+    </div>
+    <div class="col-12 col-md-4">
+        {{ form_row(form.firstname) }}
+    </div>
+    <div class="col-12 col-md-4">
+        {{ form_row(form.email) }}
+    </div>
+    <div class="col-12 col-md-4">
+        {{ form_row(form.phone) }}
+    </div>
+    <div class="col-12 col-md-4">
+        {{ form_widget(form.roles) }}
+    </div>
+    <div class="col-12 col-md-4">
+        {{ form_widget(form.isVerified) }}
+    </div>
+</div>
+
+{% if form.plainPassword is defined %}
+    <div class="form-row mt-3">
+        <div class="col-12">
+            <div class="h5-responsive" style="border-bottom: 1.8px solid #212121">
+                <div class="badge badge-dark d-inline-block mr-1" style="position: relative; bottom: 6px;">2</div>
+                <div class="text-dark d-inline-block font-weight-stone-500">Mot de passe</div>
+            </div>
+        </div>
+    </div>
+    <div id="password-bulk" class="form-row">
+        <div class="col-12 col-md-4">
+            {{ form_widget(form.plainPassword.first) }}
+        </div>
+        <div class="col-12 col-md-4">
+            {{ form_widget(form.plainPassword.second) }}
+        </div>
+        <div class="col-12 col-md-4 d-flex align-items-center">
+            <a id="password-generate-btn" href="" class="btn btn-grey-medium btn-sm mt-3">Générer le mot de passe</a>
+        </div>
+    </div>
+{% endif %}
+

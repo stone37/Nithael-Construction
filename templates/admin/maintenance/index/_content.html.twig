@@ -1,0 +1,18 @@
+{% import 'ui/macro/buttons.html.twig' as buttons %}
+
+{% form_theme form 'ui/form/theme.html.twig' %}
+
+<section class="section card mb-5">
+    <div class="card-body">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'settings-form'}}) }}
+
+        {{ include('admin/maintenance/form.html.twig') }}
+
+        {{ form_widget(form._token) }}
+
+        <div class="d-flex justify-content-center mt-4">
+            <div class="text-center">{{ buttons.validate('Valider', 'fas fa-save', '') }}</div>
+        </div>
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+</section>

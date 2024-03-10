@@ -1,0 +1,11 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}References | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {{ include('admin/reference/index/_header.html.twig') }}
+
+    {{ include('ui/_flashes_message.html.twig') }}
+
+    {{ include('admin/reference/index/_content.html.twig') }}
+{% endblock %}

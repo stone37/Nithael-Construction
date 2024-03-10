@@ -1,0 +1,12 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Carousels | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {{ include('admin/carousel/index/_header.html.twig') }}
+
+    {{ include('ui/_flashes_message.html.twig') }}
+
+    {{ include('admin/carousel/index/_content.html.twig') }}
+{% endblock %}
+

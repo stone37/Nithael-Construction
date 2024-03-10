@@ -1,0 +1,11 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Gestion des articles | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {{ include('admin/blog/index/_header.html.twig') }}
+
+    {{ include('ui/_flashes_message.html.twig') }}
+
+    {{ include('admin/blog/index/_content.html.twig') }}
+{% endblock %}

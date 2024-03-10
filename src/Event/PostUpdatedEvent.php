@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Event;
+
+use App\Entity\Post;
+
+class PostUpdatedEvent
+{
+    public function __construct(private Post $post, private Post $previous)
+    {
+    }
+
+    public function getPost(): Post
+    {
+        return $this->post;
+    }
+
+    public function getPrevious(): Post
+    {
+        return $this->previous;
+    }
+}

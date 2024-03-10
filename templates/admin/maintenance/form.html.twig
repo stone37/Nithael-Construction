@@ -1,0 +1,21 @@
+<div class="form-row">
+    <div class="col-12 col-md-4 col-lg-3">
+        {{ form_widget(form.enabled) }}
+    </div>
+    <div class="col-12">
+        {{ form_row(form.ipAddresses) }}
+    </div>
+    <div class="col-12 mb-4">
+        {{ form_widget(form.customMessage) }}
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="font-weight-stone-500" style="margin-bottom: -1.2rem !important;">Commence le (facultatif)</div>
+        {{ form_row(form.startDate) }}
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="font-weight-stone-500" style="margin-bottom: -1.2rem !important;">Se termine le (facultatif)</div>
+        {{ form_row(form.endDate) }}
+    </div>
+</div>
+
+
