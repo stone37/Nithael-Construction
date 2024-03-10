@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class AddClassActiveUtil
 {
-    public function __construct(private RequestStack $request)
+    public function __construct(private readonly RequestStack $request)
     {
     }
 

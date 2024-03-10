@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Form;
 
-
-use App\Repository\CategoryRepository;
+use App\Repository\AdvertRepository;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -12,9 +10,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoryChoiceType extends AbstractType
+class AdvertChoiceType extends AbstractType
 {
-    public function __construct(private readonly CategoryRepository $repository)
+    public function __construct(private readonly AdvertRepository $repository)
     {
     }
 
@@ -28,9 +26,9 @@ class CategoryChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'choices' => fn(Options $options): array => $this->repository->findBy(['enabled' => true], ['position' => 'asc']),
+            'choices' => fn(Options $options): array => $this->repository->findBy([], ['position' => 'asc']),
             'choice_value' => 'id',
-            'choice_label' => 'name',
+            'choice_label' => 'title',
             'choice_translation_domain' => false,
         ]);
     }

@@ -7,7 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AdvertPreCreateEvent
 {
-    public function  __construct(private Advert $advert, private Request $request)
+    public function  __construct(
+        private readonly Advert $advert,
+        private readonly Request $request
+    )
     {
     }
 

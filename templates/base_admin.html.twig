@@ -19,6 +19,13 @@
             {{ include('ui/_stylesheets.html.twig', {'path': 'assets/css/admin/admin.css'}) }}
         {% endblock %}
         {% block javascripts %}
+            <script type="text/javascript" defer>
+                window.advert = {
+                    ...(window.advert || {}),
+                    ADMIN: {{ is_granted('ROLE_SUPER_ADMIN') ? 'true' : 'false' }},
+                    USER: {{ app.user ? app.user.userIdentifier : 'null' }}
+                }
+            </script>
             {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/jquery.min.js'}) }}
             {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/popper.min.js'}) }}
             {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/bootstrap.min.js'}) }}
@@ -28,23 +35,11 @@
         {% endblock %}
     </head>
     <body class="fixed-sn skin-light">
-        <header>
-            {% block app_navbar %}{% endblock %}
-        </header>
+        <header>{% block app_navbar %}{% endblock %}</header>
 
-        <main class="px-3 px-md-1">
-            {% block app_body %}{% endblock %}
-        </main>
+        <main class="px-3 px-md-1">{% block app_body %}{% endblock %}</main>
 
         {{ include('ui/_loading.html.twig') }}
         {{ include('ui/_confirmation.html.twig') }}
-        <script>
-            window.hostel = {
-                ...(window.hostel || {}),
-                ADMIN: {{ is_granted('ROLE_SUPER_ADMIN') ? 'true' : 'false' }},
-                USER: {{ app.user ? app.user.id : 'null' }}
-            }
-        </script>
     </body>
 </html>
-

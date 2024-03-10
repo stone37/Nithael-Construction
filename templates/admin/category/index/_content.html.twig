@@ -1,7 +1,7 @@
 <div class="row mb-4">
     <div class="col-12 d-flex justify-content-center justify-content-md-between">
         <div id="entity-list-delete-bulk-btn" class="mr-3 d-none">
-            <a id="entity-bulk-delete-btn" class="btn btn-danger btn-md" data-url="{{ path('app_admin_category_bulk_delete') }}">
+            <a id="entity-bulk-delete-btn" class="btn btn-danger btn-md z-depth-0" data-url="{{ path('app_admin_category_bulk_delete') }}">
                 <i class="fas fa-trash mr-1"></i> Supprimer
             </a>
         </div>
@@ -43,12 +43,12 @@
                         <td class="text-center">{{ row.name }}</td>
                         <td class="text-center">
                             {% if row.enabled %}
-                                <span class="badge badge-success">
-                                    <i class="fas fa-check mr-1"></i> Actif
+                                <span class="badge badge-success z-depth-0">
+                                    <i class="fas fa-check mr-1 z-depth-0"></i> Actif
                                 </span>
                             {% else %}
-                                <span class="badge badge-danger">
-                                    <i class="fas fa-times mr-1"></i> Inactif
+                                <span class="badge badge-danger z-depth-0">
+                                    <i class="fas fa-times mr-1 z-depth-0"></i> Inactif
                                 </span>
                             {% endif %}
                         </td>

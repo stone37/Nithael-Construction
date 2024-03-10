@@ -2,57 +2,60 @@
 
 namespace App\Service;
 
-use App\Entity\ContactRequest;
-use App\Exception\TooManyContactException;
-use App\Data\ContactData;
-use App\Repository\ContactRequestRepository;
+use App\Data\AdvertMessageData;
+use App\Entity\Advert;
+use App\Entity\MessageRequest;
+use App\Exception\TooManyAdvertMessageException;
+use App\Mailing\Mailer;
+use App\Repository\MessageRequestRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
-class ContactService
+class AdvertMessageService
 {
     public function __construct(
-        private readonly ContactRequestRepository $repository,
+        private readonly MessageRequestRepository $repository,
         private readonly EntityManagerInterface   $em,
-        private readonly MailerInterface $mailer
+        private readonly Mailer          $mailer
     )
     {
     }
 
     /**
      * @throws TransportExceptionInterface
-     * @throws TooManyContactException
+     * @throws TooManyAdvertMessageException
+     * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     * @throws RuntimeError
+     * @throws LoaderError
      */
-    public function send(ContactData $data, Request $request): void
+    public function send(AdvertMessageData $data, Advert $advert, Request $request): void
     {
-        $contactRequest = (new ContactRequest())->setRawIp($request->getClientIp());
-        $lastRequest = $this->repository->findLastRequestForIp($contactRequest->getIp());
+        $messageRequest = (new MessageRequest())->setRawIp($request->getClientIp());
+        $lastRequest = $this->repository->findLastRequestForIp($messageRequest->getIp());
 
         if ($lastRequest && $lastRequest->getCreatedAt() > new DateTime('- 1 hour')) {
-            throw new TooManyContactException();
+            throw new TooManyAdvertMessageException();
         }
 
         if (null !== $lastRequest) {
             $lastRequest->setCreatedAt(new DateTime());
         } else {
-            $this->em->persist($contactRequest);
+            $this->em->persist($messageRequest);
         }
 
         $this->em->flush();
 
-        $message = (new Email())
-            ->text($data->content)
-            ->subject("Nithael Construction::Contact : {$data->name} ({$data->phone})")
-            ->from('noreply@nithaelconstruction.com')
-            ->replyTo(new Address($data->email, $data->name))
-            ->to('contact@nithaelconstruction.com');
+        $sender = $this->mailer->createEmail('mails/message/send.twig', ['data' => $data, 'advert' => $advert])
+            ->to('contact@nithaelconstruction.com')
+            ->subject("Nithael Construction::Contact : {$data->firstname} {$data->lastname} ({$data->phone})");
 
-        $this->mailer->send($message);
+        $this->mailer->send($sender);
     }
 }
 

@@ -2,10 +2,7 @@
 
 namespace App\Data;
 
-use App\Entity\Category;
 use App\Form\CategoryType;
-use App\Form\ReferenceType;
-use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CategoryCrudData extends AutomaticCrudData

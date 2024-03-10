@@ -1,0 +1,46 @@
+{% set settings = config.get %}
+
+{% if settings.facebookAddress or settings.twitterAddress or settings.instagramAddress or
+      settings.youtubeAddress or settings.linkedinAddress %}
+    <ul class="navbar-nav nav-flex-icons">
+        {% if settings.facebookAddress %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ settings.facebookAddress }}" target="_blank">
+                    <i class="fab fa-facebook-f title"></i>
+                </a>
+            </li>
+        {% endif %}
+
+        {% if settings.twitterAddress %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ settings.twitterAddress }}" target="_blank">
+                    <i class="fab fa-twitter title"></i>
+                </a>
+            </li>
+        {% endif %}
+
+        {% if settings.instagramAddress %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ settings.instagramAddress }}" target="_blank">
+                    <i class="fab fa-instagram title"></i>
+                </a>
+            </li>
+        {% endif %}
+
+        {% if settings.youtubeAddress %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ settings.youtubeAddress }}" target="_blank">
+                    <i class="fab fa-youtube title"></i>
+                </a>
+            </li>
+        {% endif %}
+
+        {% if settings.linkedinAddress %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ settings.linkedinAddress }}" target="_blank">
+                    <i class="fab fa-linkedin-in title"></i>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+{% endif %}

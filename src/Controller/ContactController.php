@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Traits\ControllerTrait;
 use App\Data\ContactData;
 use App\Exception\TooManyContactException;
 use App\Form\ContactType;
@@ -18,9 +19,9 @@ class ContactController extends AbstractController
     use ControllerTrait;
 
     public function __construct(
-        private Breadcrumbs $breadcrumbs,
-        private ContactService $contactService,
-        private ReCaptcha $reCaptcha
+        private readonly Breadcrumbs    $breadcrumbs,
+        private readonly ContactService $contactService,
+        private readonly ReCaptcha $reCaptcha
     )
     { 
     }

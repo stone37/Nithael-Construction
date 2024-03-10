@@ -1,0 +1,22 @@
+{% set settings = config.get %}
+
+{% if posts|length > 0 and settings.activeBlog %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="wow fadeIn">
+                    <h1 class="h1-responsive font-weight-bold text-dark text-center mb-4 wow fadeInLeft" data-wow-delay="0.3s">
+                        Nos dernière actualités
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-12 col-md-4">
+                    {{ include('site/blog/_box.html.twig') }}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}

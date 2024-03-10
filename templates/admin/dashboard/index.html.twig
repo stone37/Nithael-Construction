@@ -11,14 +11,3 @@
 {% endblock %}
 
 
-{% block javascripts %}
-    {{ parent() }}
-
-    <script type="text/javascript" defer>
-        const $oDaily = '{{ days|json_encode|raw }}',
-            $oMonthly = '{{ months|json_encode|raw }}';
-    </script>
-
-    {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/admin/stats.js'}) }}
-{% endblock %}
-

@@ -6,7 +6,7 @@ use App\Entity\Advert;
 
 class AdvertViewEvent
 {
-    public function __construct(private Advert $advert)
+    public function __construct(private readonly Advert $advert)
     {
     }
 

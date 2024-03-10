@@ -1,0 +1,28 @@
+{% extends 'site/layout.html.twig' %}
+
+{% block title 'Actualités' %}
+
+{% set settings = config.get %}
+
+{% block meta %}
+    {% set content = "Plongez dans l'actualité immobilière : restez informé, restez en avance !" %}
+    <meta name="description" content="{{ content }}"/>
+    <meta property="og:description" content="{{ content }}" />
+{% endblock %}
+
+{% block app_intro %}
+    {{ parent() }}
+
+    <section class="bc container">
+        {{ wo_render_breadcrumbs({
+            viewTemplate: 'ui/_breadcrumb.html.twig',
+            listClass: 'breadcrumb',
+            itemClass: 'breadcrumb-item',
+            separator: '>',
+            separatorClass: 'fas fa-angle-right'}) }}
+    </section>
+{% endblock %}
+
+{% block app_body %}
+    {{ include('site/blog/index/_content.html.twig') }}
+{% endblock %}

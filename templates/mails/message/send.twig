@@ -1,0 +1,29 @@
+{% extends layout %}
+
+{% import "mails/macros.twig" as e %}
+
+{% block body %}
+
+    {% apply markdown_email %}
+
+        Bonjour !
+        ==========
+
+        Vous avez recu une nouvelle **demande de reservation** de bien.
+
+        Détails de la demande
+        ----------------------
+
+        Nom: **{{ data.lastname }}**
+        Prénom: **{{ data.firstname }}**
+        Adresse mail: **{{ data.email }}**
+        Téléphone: **{{ data.phone }}**
+
+        Demande
+        -------
+        {{ data.content }}
+
+        {{ e.button('Voir l\'offres', url('app_admin_advert_show', {id: advert.id})) }}
+
+    {% endapply %}
+{% endblock %}

@@ -1,0 +1,41 @@
+<section class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h1-responsive font-weight-bold text-dark mt-0 mb-3 wow fadeInLeft" data-wow-delay="0.3s">
+                Plongez dans l'actualité immobilière : restez informé, restez en avance !
+            </h1>
+        </div>
+        <div class="col-12">
+            <p class="mb-5 wow fadeInLeft" data-wow-delay="0.3s">
+                Restez au courant des dernières nouvelles et développements dans le monde de
+                l'immobilier grâce à notre page d'actualités. De l'évolution des prix du marché
+                aux conseils pour acheter ou vendre votre propriété, nous vous tenons informé de
+                tout ce qui compte. Explorez nos articles, analyses et interviews pour obtenir des
+                informations précieuses et prendre des décisions éclairées pour votre avenir immobilier.
+            </p>
+        </div>
+    </div>
+</section>
+
+{% if posts|length > 0 %}
+    <section class="container blog">
+        <div class="row">
+            <section class="col-12 col-md-8 col-lg-9">
+                {% for post in posts %}
+                    {{ include('site/blog/_box.html.twig') }}
+                {% endfor %}
+
+                <div class="d-flex justify-content-center">
+                    {{ knp_pagination_render(posts, 'ui/_pagination.html.twig') }}
+                </div>
+            </section>
+            <section class="col-12 col-md-4 col-lg-3">
+                {{ render(controller('App\\Controller\\BlogController::categories')) }}
+            </section>
+        </div>
+    </section>
+{% else %}
+    <div class="my-4 text-center">
+        <h2 class="h2-responsive text-dark font-weight-bold">Aucun article disponible</h2>
+    </div>
+{% endif %}

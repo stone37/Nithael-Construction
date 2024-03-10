@@ -2,10 +2,10 @@
 
 namespace App\Data;
 
-use App\Form\CategoryType;
+use App\Form\AdvertCategoryType;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CategoryCrudData extends AutomaticCrudData
+class AdvertCategoryCrudData extends AutomaticCrudData
 {
     #[Assert\NotBlank]
     public ?string $name = null;
@@ -19,7 +19,7 @@ class CategoryCrudData extends AutomaticCrudData
 
     public function getFormClass(): string
     {
-        return CategoryType::class;
+        return AdvertCategoryType::class;
     }
 
     public function hydrate(): void

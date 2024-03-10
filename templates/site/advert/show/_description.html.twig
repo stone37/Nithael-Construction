@@ -1,0 +1,9 @@
+<section class="row mt-3 mb-4">
+    <div class="col-12">
+        <h4 class="h4-responsive font-weight-bold text-dark mb-2">Description</h4>
+        <p class="small-9 mb-2">{{ advert.description|raw }}</p>
+        <div class="small-8 font-weight-bold text-secondary">
+            Dernière mise à jour: {{ advert.updatedAt|format_datetime(pattern="dd MMM yyyy") }}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,80 @@
+{% if carouselItems|length > 0 %}
+<div id="home-carousel" class="carousel slide home-carousel" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+        {% for item in carouselItems %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                {% set picture = item.advert.pictures|length > 0 ? item.advert.pictures[0].webPath : 'assets/images/architecture.jpg' %}
+                <div class="view" style="background-image: url({{ vich_uploader_asset(item, 'file') ? vich_uploader_asset(item, 'file') : asset(picture) }}); background-repeat: no-repeat;background-size: cover; background-position: center center;">
+                    <div class="mask rgba-black-strong">
+                        <div class="container h-100 d-flex justify-content-start align-items-center">
+                            <div class="row h-100 d-flex justify-content-start align-items-center">
+                                <div class="col-md-12 text-left text-md-left mt-5 pt-4 pt-md-0 mt-lg-0 mb-5 mb-md-0">
+                                    <div class="white-text text-left">
+                                        <div class="advert-location wow fadeInLeft" data-wow-delay="0.3s">
+                                            Disponible à {{ item.advert.city }}
+                                        </div>
+                                        <h1 class="my-4 wow fadeInDown" data-wow-delay="0.3s">
+                                            <strong class="font-weight-bold">
+                                                {% if item.title %}
+                                                    {{ item.title|u.truncate(55, '...') }}
+                                                {% else %}
+                                                    {{ item.advert.title|u.truncate(55, '...') }}
+                                                {% endif %}
+                                            </strong>
+                                        </h1>
+                                        <a class="btn btn-default btn-lg font-weight-bold z-depth-0 wow fadeInLeft"
+                                           data-wow-delay="0.3s" href="{{ path('app_advert_show', {'slug': item.advert.slug}) }}">
+                                            Voir maintenant <i class="fas fa-angle-right ml-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <a class="carousel-control-next" href="#home-carousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+        <a class="carousel-control-prev" href="#home-carousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <ol class="carousel-indicators">
+            {% for item in carouselItems %}
+                <li data-target="#home-carousel" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active"{% endif %}></li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+{% else %}
+    <section class="view intro-2" style="background-image: url({{ asset('assets/images/architecture.jpg') }}); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+        <div class="mask rgba-black-strong">
+            <div class="container h-100 d-flex justify-content-start align-items-center">
+                <div class="row h-100 d-flex justify-content-start align-items-center">
+                    <div class="col-md-12 text-left text-md-left mt-5 pt-4 pt-md-0 mt-lg-0 mb-5 mb-md-0">
+                        <div class="white-text text-left">
+                            <h1 class="mt-lg-5 mb-4 wow fadeInDown" data-wow-delay="0.3s">
+                                <strong class="font-weight-bold">Votre vision, notre expertise, votre maison de rêve.</strong>
+                            </h1>
+                            <hr class="hr-light wow fadeInLeft d-none d-md-block" data-wow-delay="0.3s">
+                            <h6 class="wow fadeInLeft font-weight-stone-500 my-md-4 d-none d-md-block" data-wow-delay="0.3s">
+                                Bienvenu chez <strong class="font-weight-bold text-info">{{ config.get.name }}</strong>,
+                                votre partenaire de confiance pour des projets immobiliers exceptionnels.
+                                De la promotion immobilière à la construction, en passant par la vente de terrains
+                                et de maisons, notre équipe dévouée vous accompagne à chaque étape. Avec notre expertise
+                                diversifiée et notre engagement envers l'excellence, nous transformons vos idées en réalité.
+                            </h6>
+                            <a class="btn btn-default btn-lg font-weight-bold z-depth-0" href="{{ path('app_advert_index') }}">
+                                Découvrez toutes nos offres <i class="fas fa-angle-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}

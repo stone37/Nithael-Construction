@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 
 class UniqueNewsletterEmailValidator extends ConstraintValidator
 {
-    public function __construct( private NewsletterDataRepository $repository)
+    public function __construct( private readonly NewsletterDataRepository $repository)
     {
     }
 

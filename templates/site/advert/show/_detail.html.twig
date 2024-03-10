@@ -1,0 +1,59 @@
+<section class="row advert-view-info mt-3">
+    {% if advert.type %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Type d'annonce</div>
+            <div class="content">{{ advert.type }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.surface %}
+        <div class="col-6 col-md-4 col-lg-3">
+            {% if advert.category.slug == 'terrains' or advert.category.slug == 'terrains-agricoles' %}
+                <div class="title">Superficie</div>
+                <div class="content">{{ advert.surface }} ha</div>
+            {% else %}
+                <div class="title">Surface</div>
+                <div class="content">{{ advert.surface }} m²</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if advert.nombrePiece %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Nombre de pièces</div>
+            <div class="content">{{ advert.nombrePiece }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.nombreChambre %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Nombre de chambre(s)</div>
+            <div class="content">{{ advert.nombreChambre }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.nombreSalleBain %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Nombre de salle(s) de bain</div>
+            <div class="content">{{ advert.nombreSalleBain }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.dateConstruction %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Date de construction</div>
+            <div class="content">{{ advert.dateConstruction }}</div>
+        </div>
+    {% endif %}
+
+    {% if advert.standing %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="title">Standing</div>
+            <div class="content">{{ advert.standing }}</div>
+        </div>
+    {% endif %}
+</section>
+
+
+
+

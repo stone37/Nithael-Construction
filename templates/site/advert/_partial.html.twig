@@ -1,10 +1,27 @@
-{% extends 'site/layout.html.twig' %}
-
-{% block app_intro %}
-
-{% endblock %}
-
-{% block title %}
-
-{% endblock %}
-
+{% if adverts|length > 0 %}
+    <section class="container advert-list mb-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="wow fadeIn">
+                    <h1 class="h1-responsive font-weight-bold text-dark text-center mb-4 wow fadeInLeft" data-wow-delay="0.3s">
+                        Nos dernière offres
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for advert in adverts %}
+                <div class="col-12 col-md-4">
+                    {{ include('site/advert/index/_box.html.twig') }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{{ path('app_advert_index') }}" class="btn btn-primary btn-lg mt-3 z-depth-0">
+                    Voir toutes nos offres <i class="fas fa-angle-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+{% endif %}

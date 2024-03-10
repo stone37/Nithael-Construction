@@ -37,7 +37,7 @@ class Category
     #[ORM\Column(nullable: true, options: ['unsigned' => true])]
     private int $postsCount = 0;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Post::class)]
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'category')]
     private Collection $posts;
 
     #[Pure] public function __construct()

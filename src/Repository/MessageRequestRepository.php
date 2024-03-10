@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Message;
+use App\Entity\MessageRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Message>
+ * @extends ServiceEntityRepository<MessageRequest>
  *
- * @method Message|null find($id, $lockMode = null, $lockVersion = null)
- * @method Message|null findOneBy(array $criteria, array $orderBy = null)
- * @method Message[]    findAll()
- * @method Message[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method MessageRequest|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MessageRequest|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MessageRequest[]    findAll()
+ * @method MessageRequest[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MessageRepository extends ServiceEntityRepository
+class MessageRequestRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Message::class);
+        parent::__construct($registry, MessageRequest::class);
     }
 
-    public function add(Message $entity, bool $flush = false): void
+    public function add(MessageRequest $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class MessageRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Message $entity, bool $flush = false): void
+    public function remove(MessageRequest $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -42,5 +42,14 @@ class MessageRepository extends ServiceEntityRepository
     public function flush(): void
     {
         $this->getEntityManager()->flush();
+    }
+
+    public function findLastRequestForIp(string $ip): ?MessageRequest
+    {
+        return $this->createQueryBuilder('mr')
+            ->where('mr.ip = :ip')
+            ->setParameter('ip', $ip)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

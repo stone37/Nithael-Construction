@@ -2,23 +2,26 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Traits\ControllerTrait;
 use App\Data\AdvertCrudData;
 use App\Entity\Advert;
-use App\Entity\User;
-use App\Event\AdvertDeniedEvent;
-use App\Event\AdvertValidatedEvent;
-use App\Form\Filter\AdminAdvertType;
+use App\Entity\AdvertPicture;
+use App\Event\AdvertBadEvent;
+use App\Event\AdvertInitEvent;
+use App\Event\AdvertPreCreateEvent;
+use App\Event\AdvertPreEditEvent;
+use App\Form\AdvertType;
+use App\Form\Filter\AdminAdvertFilterType;
 use App\Manager\AdvertManager;
 use App\Model\Admin\AdvertSearch;
 use DateTime;
-use JetBrains\PhpStorm\ArrayShape;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 #[Route('/admin')]
 class AdvertController extends CrudController
@@ -26,6 +29,8 @@ class AdvertController extends CrudController
     protected string $entity = Advert::class;
     protected string $templatePath = 'advert';
     protected string $routePrefix = 'app_admin_advert';
+    protected string $createFlashMessage = 'Une annonce a été crée';
+    protected string $editFlashMessage = 'Une annonce a été mise à jour';
     protected string $deleteFlashMessage = 'Une annonce a été supprimé';
     protected string $deleteMultiFlashMessage = 'Les annonces ont été supprimés';
     protected string $deleteErrorFlashMessage = 'Désolé, les annonces n\'a pas pu être supprimé !';
@@ -35,7 +40,7 @@ class AdvertController extends CrudController
     {
         $search = new AdvertSearch();
 
-        $form = $this->createForm(AdminAdvertType::class, $search);
+        $form = $this->createForm(AdminAdvertFilterType::class, $search);
         $form->handleRequest($request);
 
         $query = $this->getRepository()->getAdmins($search);
@@ -43,267 +48,113 @@ class AdvertController extends CrudController
         return $this->crudIndex($query, $form, 1);
     }
 
-    #[Route(path: '/adverts/validated', name: 'app_admin_advert_validated_index')]
-    public function validate(Request $request): Response
+    #[Route(path: '/adverts/{category_slug}/create', name: 'app_admin_advert_create')]
+    public function create(
+        Request $request,
+        EventDispatcherInterface $dispatcher,
+        AdvertManager $manager
+    ): RedirectResponse|Response
     {
-        $search = new AdvertSearch();
+        $advert = $manager->createAdvert();
+        $class_exist = class_exists($manager->createForm());
 
-        $form = $this->createForm(AdminAdvertType::class, $search);
+        $dispatcher->dispatch(new AdvertInitEvent($request));
+
+        $form = $this->createForm($class_exist ? $manager->createForm() : AdvertType::class, $advert);
         $form->handleRequest($request);
 
-        $query = $this->getRepository()->getValidateAdmins($search);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        return $this->crudIndex($query, $form, 2);
-    }
+            $dispatcher->dispatch(new AdvertPreCreateEvent($advert, $request));
 
-    #[Route(path: '/adverts/refused', name: 'app_admin_advert_refused_index')]
-    public function refused(Request $request): Response
-    {
-        $search = new AdvertSearch();
+            $advert->setCreatedAt(new DateTime());
+            $advert->setUpdatedAt(new DateTime());
 
-        $form = $this->createForm(AdminAdvertType::class, $search);
-        $form->handleRequest($request);
+            $this->em->persist($advert);
+            $this->em->flush();
 
-        $query = $this->getRepository()->getDeniedAdmins($search);
+            $this->addFlash('success', $this->createFlashMessage);
 
-        return $this->crudIndex($query, $form, 3);
-    }
-
-    #[Route(path: '/adverts/archive', name: 'app_admin_advert_archive_index')]
-    public function archive(Request $request): Response
-    {
-        $search = new AdvertSearch();
-
-        $form = $this->createForm(AdminAdvertType::class, $search);
-        $form->handleRequest($request);
-
-        $query = $this->getRepository()->getArchiveAdmins($search);
-
-        return $this->crudIndex($query, $form, 4);
-    }
-
-    #[Route(path: '/adverts/remove', name: 'app_admin_advert_remove_index')]
-    public function removed(Request $request): Response
-    {
-        $search = new AdvertSearch();
-
-        $form = $this->createForm(AdminAdvertType::class, $search);
-        $form->handleRequest($request);
-
-        $query = $this->getRepository()->getRemoveAdmins($search);
-
-        return $this->crudIndex($query, $form, 5);
-    }
-
-    #[Route(path: '/adverts/{id}/user', name: 'app_admin_advert_user', requirements: ['id' => '\d+'])]
-    public function user(Request $request, User $user): Response
-    {
-        $search = new AdvertSearch();
-
-        $form = $this->createForm(AdminAdvertType::class, $search);
-        $form->handleRequest($request);
-
-        $query = $this->getRepository()->getAdminByUser($user, $search);
-
-        return $this->crudIndex($query, $form, 6);
-    }
-
-    #[Route(path: '/adverts/{id}/show/{type}', name: 'app_admin_advert_show', requirements: ['id' => '\d+'])]
-    public function show(Advert $advert, $type): Response
-    {
-        return $this->render('admin/advert/show.html.twig', ['advert' => $advert, 'type' => $type]);
-    }
-
-    #[Route(path: '/adverts/{id}/validate', name: 'app_admin_advert_validate', requirements: ['id' => '\d+'], options: ['expose' => true])]
-    public function validated(Request $request, AdvertManager $manager, Advert $advert): RedirectResponse|JsonResponse
-    {
-        $form = $this->validateForm($advert);
-
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                $manager->validate($advert);
-
-                $this->getRepository()->flush();
-
-                $this->dispatcher->dispatch(new AdvertValidatedEvent($advert));
-
-                $this->addFlash('success', 'L\'annonce a été valider');
-            } else {
-                $this->addFlash('error', 'Désolé, l\'annonce n\'a pas pu être valider !');
-            }
-
-            $url = $request->request->get('referer');
-
-            return new RedirectResponse($url);
+            return $this->redirectToRoute('app_admin_advert_index');
+        } else {
+            $dispatcher->dispatch(new AdvertBadEvent($advert, $request));
         }
 
-        $message = 'Être vous sur de vouloir valider cette annonce ?';
-
-        $render = $this->render('ui/modal/_validate.html.twig', [
+        return $this->render('admin/'. $this->templatePath .'/create.html.twig', [
             'form' => $form->createView(),
-            'data' => $advert,
-            'message' => $message,
-            'configuration' => $this->getConfiguration()
+            'view' => $class_exist ? $manager->viewRoute() : 'admin/advert/form.html.twig',
+            'advert' => $advert
         ]);
-
-        $response['html'] = $render->getContent();
-
-        return new JsonResponse($response);
     }
 
-    #[Route(path: '/adverts/bulk/validate', name: 'app_admin_advert_bulk_validate', options: ['expose' => true])]
-    public function validatedBulk(Request $request, AdvertManager $manager): RedirectResponse|JsonResponse
+    #[Route(path: '/adverts/{category_slug}/{id}/edit', name: 'app_admin_advert_edit', requirements: ['id' => '\d+'])]
+    public function edit(
+        Request $request,
+        EventDispatcherInterface $dispatcher,
+        AdvertManager $manager,
+        Advert $advert
+    ): RedirectResponse|Response
     {
-        $ids = (array) json_decode($request->query->get('data'));
+        $dispatcher->dispatch(new AdvertInitEvent($request));
+        $class_exist = class_exists($manager->editForm($advert));
 
-        if ($request->query->has('data')) {
-            $request->getSession()->set('data', $ids);
+        $form = $this->createForm($manager->editForm($advert), $advert);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $dispatcher->dispatch(new AdvertPreEditEvent($advert, $request));
+
+            $advert->setUpdatedAt(new DateTime());
+
+            $this->em->flush();
+
+            $this->addFlash('success', $this->editFlashMessage);
+
+            return $this->redirectToRoute('app_admin_advert_index');
+        } else {
+            $dispatcher->dispatch(new AdvertBadEvent($advert, $request));
         }
 
-        $form = $this->validateMultiForm();
-
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                $ids = $request->getSession()->get('data');
-                $request->getSession()->remove('data');
-
-                foreach ($ids as $id) {
-                    $advert = $this->getRepository()->find($id);
-
-                    $manager->validate($advert);
-
-                    $this->getRepository()->flush();
-
-                    $this->dispatcher->dispatch(new AdvertValidatedEvent($advert));
-                }
-
-                $this->addFlash('success', 'Les annonces ont été valider');
-            } else {
-                $this->addFlash('error', 'Désolé, les annonces n\'ont pas pu être valider !');
-            }
-
-            $url = $request->request->get('referer');
-
-            return new RedirectResponse($url);
-        }
-
-        if (count($ids) > 1)
-            $message = 'Être vous sur de vouloir valider ces '.count($ids).' annonces ?';
-        else
-            $message = 'Être vous sur de vouloir valider cette annonce ?';
-
-        $render = $this->render('ui/modal/_validate_multi.html.twig', [
+        return $this->render('admin/'. $this->templatePath .'/edit.html.twig', [
             'form' => $form->createView(),
-            'data' => $ids,
-            'message' => $message,
-            'configuration' => $this->getConfiguration()
+            'view' => $class_exist ? $manager->viewEditRoute($advert) : 'admin/advert/form.html.twig',
+            'advert' => $advert
         ]);
-
-        $response['html'] = $render->getContent();
-
-        return new JsonResponse($response);
     }
 
-    #[Route(path: '/adverts/{id}/denied', name: 'app_admin_advert_denied', requirements: ['id' => '\d+'], options: ['expose' => true])]
-    public function denied(Request $request, AdvertManager $manager, Advert $advert): RedirectResponse|JsonResponse
+    #[Route(path: '/adverts/images/delete', name: 'app_admin_advert_image_delete')]
+    public function deleteImage(Request $request): NotFoundHttpException|JsonResponse
     {
-        $form = $this->deniedForm($advert);
-
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                $manager->denied($advert);
-
-                $this->getRepository()->flush();
-
-                $this->dispatcher->dispatch(new AdvertDeniedEvent($advert));
-
-                $this->addFlash('success', 'L\'annonce a été refuser');
-            } else {
-                $this->addFlash('error', 'Désolé, l\'annonce n\'a pas pu être refuser !');
-            }
-
-            $url = $request->request->get('referer');
-
-            return new RedirectResponse($url);
+        if (!$request->isXmlHttpRequest()) {
+            return $this->createNotFoundException('Bad request');
         }
 
-        $message = 'Être vous sur de vouloir refuser cette annonce ?';
+        if (!$request->query->has('id')) {
+            return $this->createNotFoundException('Bad request');
+        }
 
-        $render = $this->render('ui/modal/_denied.html.twig', [
-            'form' => $form->createView(),
-            'data' => $advert,
-            'message' => $message,
-            'configuration' => $this->getConfiguration()
-        ]);
+        $picture = $this->em->getRepository(AdvertPicture::class)->find($request->query->get('id'));
 
-        $response['html'] = $render->getContent();
+        $picture->setAdvert(null);
 
-        return new JsonResponse($response);
+        $this->em->remove($picture);
+        $this->em->flush();
+
+        return new JsonResponse(['success' => true, 'id' => null]);
     }
 
-    #[Route(path: '/adverts/bulk/denied', name: 'app_admin_advert_bulk_denied', options: ['expose' => true])]
-    public function deniedBulk(Request $request, AdvertManager $manager): RedirectResponse|JsonResponse
+    #[Route(path: '/adverts/{id}/show', name: 'app_admin_advert_show', requirements: ['id' => '\d+'])]
+    public function show(Advert $advert): Response
     {
-        $ids = (array) json_decode($request->query->get('data'));
+        return $this->render('admin/advert/show.html.twig', ['advert' => $advert]);
+    }
 
-        if ($request->query->has('data')) {
-            $request->getSession()->set('data', $ids);
-        }
-
-        $form = $this->deniedMultiForm();
-
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                $ids = $request->getSession()->get('data');
-                $request->getSession()->remove('data');
-
-                foreach ($ids as $id) {
-                    $advert = $this->getRepository()->find($id);
-
-                    $manager->denied($advert);
-
-                    $this->getRepository()->flush();
-
-                    $this->dispatcher->dispatch(new AdvertDeniedEvent($advert));
-                }
-
-                $this->addFlash('success', 'Les annonces ont été refuser');
-            } else {
-                $this->addFlash('error', 'Désolé, les annonces n\'ont pas pu être refuser !');
-            }
-
-            $url = $request->request->get('referer');
-
-            return new RedirectResponse($url);
-        }
-
-        if (count($ids) > 1)
-            $message = 'Être vous sur de vouloir refuser ces '.count($ids).' annonces ?';
-        else
-            $message = 'Être vous sur de vouloir refuser cette annonce ?';
-
-        $render = $this->render('ui/modal/_denied_multi.html.twig', [
-            'form' => $form->createView(),
-            'data' => $ids,
-            'message' => $message,
-            'configuration' => $this->getConfiguration(),
-        ]);
-
-        $response['html'] = $render->getContent();
-
-        return new JsonResponse($response);
+    #[Route(path: '/adverts/{id}/move', name: 'app_admin_advert_move', requirements: ['id' => '\d+'])]
+    public function move(Advert $advert): RedirectResponse
+    {
+        return $this->crudMove($advert);
     }
 
     #[Route(path: '/adverts/{id}/delete', name: 'app_admin_advert_delete', requirements: ['id' => '\d+'])]
@@ -320,150 +171,6 @@ class AdvertController extends CrudController
         return $this->crudMultiDelete();
     }
 
-    #[Route(path: '/adverts/{type}/clean', name: 'app_admin_advert_clean', requirements: ['type' => '\d+'])]
-    public function clean(Request $request, int $type): NotFoundHttpException|RedirectResponse|JsonResponse
-    {
-        if ($type === 1) {
-            $adverts = $this->getRepository()->deniedClean();
-        } elseif ($type === 2) {
-            $adverts = $this->getRepository()->archivedClean();
-        } elseif ($type === 3) {
-            $adverts = $this->getRepository()->removedClean();
-        } else {
-            return $this->createNotFoundException('Bad request');
-        }
-
-        $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('app_admin_advert_clean', ['type' => $type]))
-            ->getForm();
-
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                if ($type === 1) {
-                    $this->getRepository()->deniedClean(true);
-                } elseif ($type === 2) {
-                    $this->getRepository()->archivedClean(true);
-                } elseif ($type === 3) {
-                    $this->getRepository()->removedClean(true);
-                }
-
-                $this->addFlash('success', 'Les annonces ont été supprimer');
-            } else {
-                $this->addFlash('error', 'Désolé, les annonces n\'ont pas pu être refuser !');
-            }
-
-            $url = $request->request->get('referer');
-
-            return new RedirectResponse($url);
-        }
-
-        if (count($adverts) > 0) {
-            if (count($adverts) > 1) {
-                $message = 'Être vous sur de vouloir supprimer ces '. count($adverts) .' annonces ?';
-            } else {
-                $message = 'Être vous sur de vouloir supprimer cette annonce ?';
-            }
-
-            $render = $this->render('ui/modal/_clean.html.twig', [
-                'form' => $form->createView(),
-                'data' => $adverts,
-                'message' => $message,
-                'configuration' => $this->getConfiguration()
-            ]);
-
-            $response['html'] = $render->getContent();
-
-            return new JsonResponse($response);
-        } else {
-            return $this->createNotFoundException('Bad request');
-        }
-    }
-
-    #[Route(path: '/adverts/reload', name: 'app_admin_advert_reload')]
-    public function reload(Request $request,): NotFoundHttpException|RedirectResponse|JsonResponse
-    {
-        $adverts = $this->getRepository()->archivedClean();
-
-        $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('app_admin_advert_reload'))
-            ->getForm();
-
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                /** @var Advert $advert */
-                foreach ($adverts as $advert) {
-                    $advert->setValidatedAt(new DateTime());
-                }
-
-                $this->getRepository()->flush();
-
-                $this->addFlash('success', 'Les annonces ont été relancée');
-            } else {
-                $this->addFlash('error', 'Désolé, les annonces n\'ont pas pu être relancée !');
-            }
-
-            $url = $request->request->get('referer');
-
-            return new RedirectResponse($url);
-        }
-
-        if (count($adverts) > 0) {
-            if (count($adverts) > 1) {
-                $message = 'Être vous sur de vouloir relancer ces '.count($adverts).' annonces ?';
-            } else {
-                $message = 'Être vous sur de vouloir relancer cette annonce ?';
-            }
-
-            $render = $this->render('ui/modal/_reload.html.twig', [
-                'form' => $form->createView(),
-                'data' => $adverts,
-                'message' => $message,
-                'configuration' => $this->getConfiguration(),
-            ]);
-
-            $response['html'] = $render->getContent();
-            $response['status'] = true;
-
-            return new JsonResponse($response);
-        } else {
-            return $this->createNotFoundException('Bad request');
-        }
-    }
-
-
-    private function validateForm(Advert $advert): FormInterface
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('app_admin_advert_validate', ['id' => $advert->getId()]))
-            ->getForm();
-    }
-
-    private function validateMultiForm(): FormInterface
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('app_admin_advert_bulk_validate'))
-            ->getForm();
-    }
-
-    private function deniedForm(Advert $advert): FormInterface
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('app_admin_advert_denied', ['id' => $advert->getId()]))
-            ->getForm();
-    }
-
-    private function deniedMultiForm(): FormInterface
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('app_admin_advert_bulk_denied'))
-            ->getForm();
-    }
-
     public function getDeleteMessage(): string
     {
         return 'Être vous sur de vouloir supprimer cette annonce ?';
@@ -472,38 +179,5 @@ class AdvertController extends CrudController
     public function getDeleteMultiMessage(int $number): string
     {
         return 'Être vous sur de vouloir supprimer ces ' . $number . ' annonces ?';
-    }
-
-    #[ArrayShape(['modal' => "\string[][]"])] protected function getConfiguration(): array
-    {
-        return [
-            'modal' => [
-                'delete' => [
-                    'type' => 'modal-danger',
-                    'icon' => 'fas fa-times',
-                    'yes_class' => 'btn-outline-danger',
-                    'no_class' => 'btn-danger'
-                ],
-                'validate' => [
-                    'type' => 'modal-success',
-                    'icon' => 'fas fa-reply',
-                    'yes_class' => 'btn-outline-success',
-                    'no_class' => 'btn-success'
-                ],
-                'denied' => [
-                    'type' => 'modal-amber',
-                    'icon' => 'fas fa-share',
-                    'yes_class' => 'btn-outline-amber',
-                    'no_class' => 'btn-amber'
-                ],
-                'reload' => [
-                    'type' => 'modal-secondary',
-                    'icon' => 'fas fa-check',
-                    'yes_class' => 'btn-outline-secondary',
-                    'no_class' => 'btn-secondary'
-                ]
-
-            ]
-        ];
     }
 }

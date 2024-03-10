@@ -1,6 +1,6 @@
 {% apply inline_css(source('mails/theme.css')) %}
 
-{% set settings = config.settings %}
+{% set settings = config.get %}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
@@ -36,7 +36,7 @@
                         <tr>
                             <td class="header">
                                 <a href="{{ url('app_home') }}" style="display: inline-block;">
-                                    <img src="{{ absolute_url('/public/assets/img/logo/email.png') }}" class="logo" alt="Logo {{ settings.name }}">
+                                    <img src="{{ absolute_url('/public/assets/images/logo.png') }}" class="logo" alt="Logo {{ settings.name }}">
                                 </a>
                             </td>
                         </tr>
@@ -57,13 +57,11 @@
                                 <table class="footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
                                     <tr>
                                         <td class="content-cell" align="center">
-                                            <table border="0" width="300" align="left" cellpadding="0" cellspacing="0"
-                                                   style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+                                            <table border="0" width="300" align="left" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
                                                 <tr>
                                                     <td align="left">
                                                         <a href="{{ url('app_home') }}" style="display: inline-block;">
-                                                            <img width="50" height="25" border="0" style="display: block; width: 50px; height: 25px"
-                                                                 src="{{ absolute_url('/public/assets/img/logo/email_footer.png') }}" alt="" />
+                                                            <img width="50" height="25" border="0" style="display: block; width: 50px; height: 25px" src="{{ absolute_url('/public/assets/images/logo.png') }}" alt="" />
                                                         </a>
                                                     </td>
                                                 </tr>

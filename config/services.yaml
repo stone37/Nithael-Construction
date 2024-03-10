@@ -4,6 +4,20 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    locale: fr_CI
+    app.path.settings: /uploads/images/logo
+    app.path.post: /uploads/images/post
+    app.path.category: /uploads/images/category
+    app.path.reference: /uploads/images/reference
+    app.path.carousel: /uploads/images/carousel
+    maintenance_dir: '%env(resolve:MAINTENANCE_DIR)%'
+    app.path.image_orphanage: '%kernel.cache_dir%/uploader/orphanage'
+
+    app_price_property_prefix: price
+    app_category_property_prefix: category
+    app_type_property_prefix: type
+    app_city_property_prefix: city
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
     # default configuration for services in *this* file
@@ -22,3 +36,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Paginator\PaginatorInterface:
+        class: App\Paginator\KnpPaginator
+
+    App\Manager\ConfigurationFileManager:
+        arguments:
+            $maintenanceDirectory: '%maintenance_dir%'
+
+    App\PropertyNameResolver\PriceNameResolver:
+        arguments:
+            $pricePropertyPrefix: '%app_price_property_prefix%'

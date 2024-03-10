@@ -2,18 +2,11 @@
 
 namespace App\Controller\RequestDataHandler;
 
-use App\Manager\SettingsManager;
-
 class PaginationDataHandler
 {
     public const PAGE_INDEX = 'page';
     public const LIMIT_INDEX = 'limit';
-    private ?int $defaultLimit;
-
-    public function __construct(SettingsManager $manager)
-    {
-        $this->defaultLimit = $manager->get()->getNumberAdvertPerPage();
-    }
+    private ?int $defaultLimit = 9;
 
     public function retrieveData(array $requestData): array
     {

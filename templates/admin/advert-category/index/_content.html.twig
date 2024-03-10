@@ -1,12 +1,12 @@
 <div class="row mb-4">
     <div class="col-12 d-flex justify-content-center justify-content-md-between">
         <div id="entity-list-delete-bulk-btn" class="mr-3 d-none">
-            <a id="entity-bulk-delete-btn" class="btn btn-danger btn-md" data-url="{{ path('app_admin_category_bulk_delete') }}">
+            <a id="entity-bulk-delete-btn" class="btn btn-danger btn-md z-depth-0" data-url="{{ path('app_admin_advert_category_bulk_delete') }}">
                 <i class="fas fa-trash mr-1"></i> Supprimer
             </a>
         </div>
         <div class="d-flex ml-auto">
-            {% set path = path('app_admin_category_create') %}
+            {% set path = path('app_admin_advert_category_create') %}
             {{ include('ui/action/create.html.twig', {'path': path, 'action': {'label': 'Créer'}}) }}
         </div>
     </div>
@@ -44,11 +44,11 @@
                         <td class="text-center">
                             {% if row.enabled %}
                                 <span class="badge badge-success">
-                                    <i class="fas fa-check mr-1"></i> Actif
+                                    <i class="fas fa-check mr-1 z-depth-0"></i> Actif
                                 </span>
                             {% else %}
                                 <span class="badge badge-danger">
-                                    <i class="fas fa-times mr-1"></i> Inactif
+                                    <i class="fas fa-times mr-1 z-depth-0"></i> Inactif
                                 </span>
                             {% endif %}
                         </td>
@@ -56,16 +56,16 @@
                             <div class="dropdown">
                                 <a class="dropdown-toggle" type="button" data-toggle="dropdown"><i class="fas fa-ellipsis-h text-primary"></i></a>
                                 <div class="dropdown-menu dropdown-primary dropdown-menu-right mt-0">
-                                    <a href="{{ path('app_admin_category_edit', {'id': row.id}) }}" class="dropdown-item">
+                                    <a href="{{ path('app_admin_advert_category_edit', {'id': row.id}) }}" class="dropdown-item">
                                         <i class="fas fa-pencil-alt mr-1"></i> Éditer
                                     </a>
-                                    <a href="{{ path('app_admin_category_move', {'id': row.id, 'pos': -1}) }}" class="dropdown-item">
+                                    <a href="{{ path('app_admin_advert_category_move', {'id': row.id, 'pos': -1}) }}" class="dropdown-item">
                                         <i class="fas fa-arrow-up mr-1"></i> Monter
                                     </a>
-                                    <a href="{{ path('app_admin_category_move', {'id': row.id, 'pos': 1}) }}" class="dropdown-item">
+                                    <a href="{{ path('app_admin_advert_category_move', {'id': row.id, 'pos': 1}) }}" class="dropdown-item">
                                         <i class="fas fa-arrow-down mr-1"></i> Descendre
                                     </a>
-                                    <a class="dropdown-item entity-delete-btn" data-id="{{ row.id }}" data-url="{{ path('app_admin_category_delete', {'id': row.id}) }}">
+                                    <a class="dropdown-item entity-delete-btn" data-id="{{ row.id }}" data-url="{{ path('app_admin_advert_category_delete', {'id': row.id}) }}">
                                         <i class="fas fa-trash mr-1 text-danger"></i> Supprimer
                                     </a>
                                 </div>

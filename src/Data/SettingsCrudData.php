@@ -28,6 +28,10 @@ class SettingsCrudData extends AutomaticCrudData
 
     public ?string $city = null;
 
+    public ?string $longitude = null;
+
+    public ?string $latitude = null;
+
     public ?string $facebookAddress = null;
 
     public ?string $twitterAddress = null;
@@ -61,6 +65,8 @@ class SettingsCrudData extends AutomaticCrudData
             ->setAddress($this->address)
             ->setCountry($this->country)
             ->setCity($this->city)
+            ->setLongitude($this->longitude)
+            ->setLatitude($this->latitude)
             ->setFacebookAddress($this->facebookAddress)
             ->setTwitterAddress($this->twitterAddress)
             ->setInstagramAddress($this->instagramAddress)

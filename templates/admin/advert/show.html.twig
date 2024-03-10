@@ -1,0 +1,13 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}
+    Voir une annonce | {{ parent() }}
+{% endblock %}
+
+{% block app_body %}
+    {{ include('admin/advert/show/_header.html.twig') }}
+
+    {{ include('ui/_flashes_message.html.twig') }}
+
+    {{ include('admin/advert/show/_content.html.twig') }}
+{% endblock %}

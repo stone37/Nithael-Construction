@@ -2,17 +2,13 @@
 
 namespace App\Model;
 
-abstract class AdvertSearch
+class AdvertSearch
 {
     private ?string $category = '';
 
-    private ?string $subCategory = '';
-
-    private ?int $type = null;
+    private ?string $type = '';
 
     private ?string $city = '';
-
-    private ?bool $urgent = false;
 
     private ?array $price = [];
 
@@ -28,24 +24,12 @@ abstract class AdvertSearch
         return $this;
     }
 
-    public function getSubCategory(): ?string
-    {
-        return $this->subCategory;
-    }
-
-    public function setSubCategory(?string $subCategory): self
-    {
-        $this->subCategory = $subCategory;
-
-        return $this;
-    }
-
-    public function getType(): ?int
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(?int $type): self
+    public function setType(?string $type): self
     {
         $this->type = $type;
 
@@ -60,18 +44,6 @@ abstract class AdvertSearch
     public function setCity(?string $city): self
     {
         $this->city = $city;
-
-        return $this;
-    }
-
-    public function getUrgent(): ?bool
-    {
-        return $this->urgent;
-    }
-
-    public function setUrgent(?bool $urgent): self
-    {
-        $this->urgent = $urgent;
 
         return $this;
     }
@@ -92,10 +64,8 @@ abstract class AdvertSearch
     {
         return [
             'category' => $this->getCategory(),
-            'subCategory' => $this->getSubCategory(),
             'type' => $this->getType(),
             'city' => $this->getCity(),
-            'urgent' => $this->getUrgent(),
             'price' => $this->getPrice()
         ];
     }

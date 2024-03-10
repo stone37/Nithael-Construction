@@ -1,0 +1,18 @@
+{% if references|length > 0 %}
+    <section class="container mt-4 reference">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="h1-responsive font-weight-bold text-dark mb-4 text-center wow fadeInLeft" data-wow-delay="0.3s">Nos partenaires</h1>
+            </div>
+        </div>
+        <div class="row">
+            {% for reference in references  %}
+                <div class="col-6 col-md-3 col-lg-2 d-flex justify-content-center">
+                   <div>
+                       <img src="{{ vich_uploader_asset(reference, 'file')|imagine_filter('reference') }}" class="img-fluid mb-3" alt="{{ reference.name }}">
+                   </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}

@@ -17,9 +17,6 @@
         {{ form_row(form.email) }}
     </div>
     <div class="col-12 col-md-4">
-        {{ form_row(form.phone) }}
-    </div>
-    <div class="col-12 col-md-4">
         {{ form_widget(form.roles) }}
     </div>
     <div class="col-12 col-md-4">
@@ -44,7 +41,7 @@
             {{ form_widget(form.plainPassword.second) }}
         </div>
         <div class="col-12 col-md-4 d-flex align-items-center">
-            <a id="password-generate-btn" href="" class="btn btn-grey-medium btn-sm mt-3">Générer le mot de passe</a>
+            <a id="password-generate-btn" href="" class="btn btn-grey-medium btn-sm z-depth-0 mt-3">Générer le mot de passe</a>
         </div>
     </div>
 {% endif %}

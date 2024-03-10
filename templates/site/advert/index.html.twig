@@ -1,0 +1,28 @@
+{% extends 'site/layout.html.twig' %}
+
+{% block title 'Nos offres' %}
+
+{% set settings = config.get %}
+
+{% block meta %}
+    {% set content = "Découvrez nos offres exceptionnelles chez NITHAEL CONSTRUCTION. Que vous recherchiez une maison, un terrain ou une opportunité d'investissement, nous avons ce qu'il vous faut. Explorez notre sélection dès maintenant !" %}
+    <meta name="description" content="{{ content }}"/>
+    <meta property="og:description" content="{{ content }}" />
+{% endblock %}
+
+{% block app_intro %}
+    {{ parent() }}
+
+    <section class="bc container">
+        {{ wo_render_breadcrumbs({
+            viewTemplate: 'ui/_breadcrumb.html.twig',
+            listClass: 'breadcrumb',
+            itemClass: 'breadcrumb-item',
+            separator: '>',
+            separatorClass: 'fas fa-angle-right'}) }}
+    </section>
+{% endblock %}
+
+{% block app_body %}
+    {{ include('site/advert/index/_content.html.twig') }}
+{% endblock %}

@@ -2,51 +2,39 @@
 
 namespace App\Subscriber;
 
-use App\Entity\AdvertRead;
 use App\Event\AdvertBadEvent;
-use App\Event\AdvertCreateEvent;
 use App\Event\AdvertInitEvent;
 use App\Event\AdvertViewEvent;
 use App\Exception\CategoryNotFoundException;
 use App\Manager\OrphanageManager;
-use App\Repository\AdvertReadRepository;
-use App\Repository\CategoryRepository;
-use App\Storage\AdvertStorage;
-use App\Storage\CartStorage;
+use App\Repository\AdvertCategoryRepository;
+use App\Repository\AdvertRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Security;
 
 class AdvertSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private CategoryRepository $repository,
-        private AdvertReadRepository $advertReadRepository,
-        private CartStorage $cartStorage,
-        private AdvertStorage $advertStorage,
-        private OrphanageManager $orphanageManager,
-        private UrlGeneratorInterface $urlGenerator,
-        private Security $security
+        private readonly AdvertCategoryRepository $repository,
+        private readonly AdvertRepository         $advertRepository,
+        private readonly OrphanageManager $orphanageManager
     )
     {
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             AdvertInitEvent::class => 'onInit',
-            AdvertCreateEvent::class => 'onCreated',
             AdvertBadEvent::class => 'onError',
-            AdvertViewEvent::class => 'onView',
+            AdvertViewEvent::class => 'onView'
         ];
     }
 
     /**
      * @throws NonUniqueResultException
      */
-    public function onInit(AdvertInitEvent $event)
+    public function onInit(AdvertInitEvent $event): void
     {
         $request = $event->getRequest();
 
@@ -59,28 +47,16 @@ class AdvertSubscriber implements EventSubscriberInterface
 
             $request->getSession()->set($this->provideKey(), []);
             $this->orphanageManager->initClear($request->getSession());
-            $this->cartStorage->init();
-            $this->advertStorage->remove();
         }
     }
 
-    public function onCreated(AdvertCreateEvent $event)
-    {
-        if ($this->cartStorage->has() && !empty($this->cartStorage->get())) {
-            $this->advertStorage->set($event->getAdvert()->getId());
-
-            $event->setResponse(new RedirectResponse($this->urlGenerator->generate('app_cart_validate')));
-        }
-    }
-
-    public function onError(AdvertBadEvent $event)
+    public function onError(AdvertBadEvent $event): void
     {
         $request = $event->getRequest();
 
         if ($event->getRequest()->isMethod('POST')) {
             $this->orphanageManager->initClear($request->getSession());
             $request->getSession()->set($this->provideKey(), []);
-            $this->cartStorage->init();
         }
     }
 
@@ -88,18 +64,10 @@ class AdvertSubscriber implements EventSubscriberInterface
     {
         $advert = $event->getAdvert();
 
-        if ($this->security->getUser() === $advert->getOwner()) {
-            return;
-        }
+        $advert->setNumberOfViews($advert->getNumberOfViews() + 1);
 
-        $read = (new AdvertRead())
-            ->setAdvert($advert);
-
-        $this->advertReadRepository->add($read, true);
+        $this->advertRepository->flush();
     }
-
-
-
 
     private function provideKey(): string
     {

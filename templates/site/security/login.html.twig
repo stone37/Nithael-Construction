@@ -1,0 +1,74 @@
+{% extends 'base_login.html.twig' %}
+
+{% set settings = config.get %}
+
+{% block title %}
+    Connexion | {{ settings.name }}
+{% endblock %}
+
+{% block app_body %}
+    <div class="login-page">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body p-3">
+                            {% for label, messages in app.flashes(['success']) %}
+                                {% for message in messages %}
+                                    <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+
+                            <h1 class="h1-responsive display-3 mb-5 text-center font-weight-bold text-dark">Connexion</h1>
+
+                            <form action="{{ path('app_login') }}" method="post">
+                                {% if error %}
+                                    <div class="text-center text-danger font-weight-stone-500">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
+
+                                <div class="mx-1 mx-md-3">
+                                    <div class="md-form md-outline form-lg input-with-pre-icon">
+                                        <i class="fas fa-envelope input-prefix"></i>
+                                        <input type="email" value="{{ last_username }}" id="username" name="_username" class="form-control form-control-lg" required autofocus>
+                                        <label for="username">Adresse e-mail</label>
+                                    </div>
+
+                                    <div class="md-form md-outline form-lg input-with-pre-icon mb-0">
+                                        <i class="fas fa-unlock input-prefix"></i>
+                                        <i class="fas fa-eye input-prefix"></i>
+                                        <input type="password" id="password" name="_password" required class="form-control form-control-lg"  />
+                                        <label for="password">Mot de passe</label>
+                                    </div>
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+                                    <div class="switch stone-switch">
+                                        <label for="remember_me">
+                                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" checked />
+                                            <span class="lever"></span>
+                                            Se souvenir de moi
+                                        </label>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <button type="submit" name="_submit" class="btn btn-primary">Connexion</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/admin/login.js'}) }}
+{% endblock %}
+

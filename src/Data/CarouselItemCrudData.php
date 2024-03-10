@@ -2,6 +2,7 @@
 
 namespace App\Data;
 
+use App\Entity\Advert;
 use App\Form\CarouselItemType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -10,13 +11,11 @@ class CarouselItemCrudData extends AutomaticCrudData
 {
     public ?string $title = null;
 
-    public ?string $description = null;
-
-    public ?string $url = null;
+    #[Assert\NotBlank]
+    public ?Advert $advert = null;
 
     public ?bool $enabled = true;
 
-    #[Assert\NotBlank]
     public ?UploadedFile $file = null;
 
     public function getEntity(): object
@@ -33,8 +32,7 @@ class CarouselItemCrudData extends AutomaticCrudData
     {
         $this->entity
             ->setTitle($this->title)
-            ->setDescription($this->description)
-            ->setUrl($this->url)
+            ->setAdvert($this->advert)
             ->setEnabled($this->enabled)
             ->setFile($this->file);
     }

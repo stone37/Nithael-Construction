@@ -14,14 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class NewsletterController extends AbstractController
 {
     public function __construct(
-        private NewsletterSubscriptionHandler $handler,
-        private NewsletterValidator $validator,
-        private NewsletterDataRepository $repository
+        private readonly NewsletterSubscriptionHandler $handler,
+        private readonly NewsletterValidator           $validator,
+        private readonly NewsletterDataRepository $repository
     )
     {
     }
 
-    #[Route(path: '/newsletter/subscribe', name: 'app_newsletter_subscribe', options: ['expose' => true])]
+    #[Route(path: '/newsletter/subscribe', name: 'app_newsletter_subscribe')]
     public function subscribe(Request $request): JsonResponse
     {
         $email = $request->request->get('email');

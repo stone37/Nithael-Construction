@@ -1,0 +1,46 @@
+{% form_theme form 'ui/form/theme.html.twig' %}
+
+{% set settings = config.get %}
+
+<section class="container advert-list-header my-md-4 mb-3">
+    <div class="row">
+        <div class="col-12 category">
+            <h3 class="h3-responsive font-weight-bold mb-md-2 mb-0 text-dark">
+                Tous les offres
+            </h3>
+            <div class="font-weight-stone-500">
+                {{ adverts.totalItemCount > 1 ? adverts.totalItemCount ~ ' offres' : adverts.totalItemCount ~ ' offre' }}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container mb-md-3 mb-4 app-advert-filter">
+    <div class="row">
+        <div class="col-12">
+            {{ include('site/advert/index/_filterForm.html.twig') }}
+        </div>
+    </div>
+</section>
+<section class="container">
+    <div class="row">
+        <div class="col-12">
+            {% if adverts|length > 0 %}
+                <section class="row advert-list">
+                   {% for advert in adverts %}
+                        <div class="col-12 col-md-6 col-lg-4">
+                            {{ include('site/advert/index/_box.html.twig') }}
+                        </div>
+                    {% endfor %}
+                </section>
+                <section class="row">
+                    <div class="col-12 d-flex justify-content-center mt-4">
+                        {{ knp_pagination_render(adverts, 'ui/_pagination.html.twig') }}
+                    </div>
+                </section>
+            {% else %}
+                {{ include('site/advert/index/_no_data.html.twig') }}
+            {% endif %}
+        </div>
+    </div>
+</section>
+

@@ -7,4 +7,20 @@ liip_imagine:
         blog:
             quality: 75
             filters:
+                thumbnail: { size: [750, 350], position: center, mode: outbound }
+        advert:
+            quality: 75
+            filters:
+                thumbnail: { size: [300, 260], position: center, mode: outbound }
+        advert_sm:
+            quality: 75
+            filters:
+                thumbnail: { size: [250, 300], position: center, mode: outbound }
+        advert_lg:
+            quality: 75
+            filters:
                 thumbnail: { size: [1000, 800], position: center, mode: outbound }
+        reference:
+            quality: 75
+            filters:
+                thumbnail: { size: [800, 600], position: center, mode: outbound }

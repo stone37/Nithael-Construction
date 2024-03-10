@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ContactRequestRepository;
 use DateTime;
 use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use geertw\IpAnonymizer\IpAnonymizer;
 
@@ -19,7 +20,7 @@ class ContactRequest
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ip = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $createdAt;
 
     public function __construct()

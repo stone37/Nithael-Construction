@@ -1,0 +1,23 @@
+{% set settings = config.get %}
+
+<section class="container">
+    {{ include('ui/_flashes_message.html.twig') }}
+</section>
+
+{{ include('site/advert/show/_header.html.twig') }}
+
+<section class="container">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            {{ include('site/advert/show/_images.html.twig') }}
+            {{ include('site/advert/show/_detail.html.twig') }}
+            {{ include('site/advert/show/_description.html.twig') }}
+        </div>
+        <div class="col-12 col-md-4">
+            {{ include('site/advert/show/_share.html.twig') }}
+            {{ include('site/advert/show/_contact.html.twig') }}
+
+            {{ render(controller('App\\Controller\\AdvertController::last')) }}
+        </div>
+    </div>
+</section>

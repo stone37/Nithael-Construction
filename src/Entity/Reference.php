@@ -11,6 +11,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: ReferenceRepository::class)]
@@ -26,6 +27,8 @@ class Reference
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 180)]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 

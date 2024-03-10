@@ -15,8 +15,11 @@ class CarouselItemType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, ['label' => 'Titre (facultatif)'])
-            ->add('description', TextareaType::class, ['label' => 'Description (facultatif)'])
-            ->add('url', TextType::class, ['label' => 'Url (facultatif)'])
+            ->add('advert', AdvertChoiceType::class, [
+                'attr' => ['class' => 'mdb-select md-outline md-form dropdown-primary'],
+                'label' => 'Annonce',
+                'placeholder' => 'Annonce'
+            ])
             ->add('enabled', SwitchType::class, [
                 'label' => 'Activée',
                 'attr' => ['class' => 'mdb-select md-outline md-form dropdown-primary'],

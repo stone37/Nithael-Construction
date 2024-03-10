@@ -3,70 +3,57 @@
 namespace App\Form\Filter;
 
 use App\Entity\Advert;
-use App\Entity\Category;
-use App\Model\ImmobilierSearch;
+use App\Form\AdvertCategoryChoiceType;
+use App\Model\AdvertSearch;
+use App\Repository\AdvertRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ImmobilierFilterType extends AbstractType
+class AdvertFilterType extends AbstractType
 {
+    public function __construct(private readonly AdvertRepository $repository)
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var Category $category */
-        $category = $options['category'];
-
         $builder
-            ->add('type', AdvertTypeFilterType::class, ['choices' => $this->getChoices($category)])
-            ->add('urgent', UrgentFilterType::class)
-            ->add('city', CityFilterType::class)
-            ->add('price', PriceFilterType::class, ['required' => false, 'label' => false])
-            ->add('surface', SurfaceFilterType::class, ['required' => false, 'label' => false])
-            ->add('nombrePiece', NombrePieceChoiceFilterType::class)
-            ->add('nombreChambre', NombreChambreChoiceFilterType::class)
-            ->add('nombreSalleBain', NombreSalleBainChoiceFilterType::class)
-            ->add('immobilierState', ImmobilierStateChoiceFilterType::class)
-            ->add('access',AccessChoiceFilterType::class)
-            ->add('proximite', ProximiteChoiceFilterType::class)
-            ->add('interior', InteriorChoiceFilterType::class)
-            ->add('exterior', ExteriorChoiceFilterType::class);
+            ->add('category', AdvertCategoryChoiceType::class, [
+                'label' => 'Catégories',
+                'attr' => ['class' => 'mdb-select md-outline md-form dropdown-primary'],
+                'placeholder' => 'Catégories',
+                'required' => false
+            ])
+            ->add('type', ChoiceType::class, [
+                'choices' => ['Vente' => Advert::TYPE_OFFER, 'Location' => Advert::TYPE_LOCATION],
+                'label' => 'Type',
+                'attr' => ['class' => 'mdb-select md-outline md-form dropdown-primary'],
+                'placeholder' => 'Type',
+                'required' => false
+            ])
+            ->add('city', ChoiceType::class, [
+                'choices' => $this->repository->getCities(),
+                'label' => 'Ville',
+                'attr' => ['class' => 'mdb-select md-outline md-form dropdown-primary'],
+                'placeholder' => 'Ville',
+                'required' => false
+            ])
+            /*->add('price', PriceFilterType::class, ['required' => false, 'label' => false])*/;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ImmobilierSearch::class,
+            'data_class' => AdvertSearch::class,
             'csrf_protection' => false,
             'method' => 'GET'
-        ])->setRequired('category');
+        ]);
     }
 
     public function getBlockPrefix(): ?string
     {
         return '';
-    }
-
-    private function getChoices(Category $category): array
-    {
-        if ($category->getSlug() === 'colocations' or
-            $category->getSlug() === 'chambres') {
-            return [
-                'Location' => Advert::TYPE_LOCATION,
-                'Recherche' => Advert::TYPE_RESEARCH
-            ];
-        }
-
-        if ($category->getSlug() === 'services-immobiliers') {
-            return [
-                'Offre de service' => Advert::TYPE_OFFER,
-                'Recherche de service' => Advert::TYPE_RESEARCH
-            ];
-        }
-
-        return [
-            'Vente' => Advert::TYPE_OFFER,
-            'Location' => Advert::TYPE_LOCATION,
-            'Recherche' => Advert::TYPE_RESEARCH
-        ];
     }
 }

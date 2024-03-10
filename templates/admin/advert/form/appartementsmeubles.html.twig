@@ -1,0 +1,34 @@
+{% extends 'admin/advert/form.html.twig' %}
+
+{% block app_advert_detail %}
+    <div class="section card mb-3">
+        <div class="card-body">
+            <div class="form-row">
+                <div class="col-12">
+                    <h5 class="h5-responsive font-weight-stone-500 text-dark">Details</h5>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-12 col-md-4 col-lg-3">
+                    {{ form_row(form.surface) }}
+                </div>
+                <div class="col-12 col-md-4 col-lg-3">
+                    {{ form_widget(form.nombrePiece) }}
+                </div>
+                <div class="col-12 col-md-4 col-lg-3">
+                    {{ form_row(form.nombreChambre) }}
+                </div>
+                <div class="col-12 col-md-4 col-lg-3">
+                    {{ form_row(form.nombreSalleBain) }}
+                </div>
+                <div class="col-12 col-md-4 col-lg-3">
+                    {{ form_widget(form.dateConstruction) }}
+                </div>
+                <div class="col-12 col-md-4 col-lg-3">
+                    {{ form_widget(form.standing) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

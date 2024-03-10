@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AdvertInitEvent
 {
-    public function __construct(private Request $request)
+    public function __construct(private readonly Request $request)
     {
     }
 

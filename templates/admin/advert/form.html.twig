@@ -1,10 +1,76 @@
-{% extends 'admin/layout.html.twig' %}
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Informations de base</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12 col-md-4 col-lg-3">
+                {{ form_widget(form.type) }}
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12 col-md-8">
+                {{ form_row(form.title) }}
+            </div>
+            <div class="col-12 col-md-8">
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="col-12 col-md-4">
+                {{ form_row(form.price) }}
+            </div>
+        </div>
+    </div>
+</div>
 
-{% block title %}
+{% block app_advert_detail %}{% endblock %}
 
-{% endblock %}
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Media</h5>
+            </div>
+        </div>
 
-{% block app_body %}
+        {% if advert.id %}
+            {{ include('admin/advert/media/_edit_image.html.twig') }}
+        {% else %}
+            {{ include('admin/advert/media/_image.html.twig') }}
+        {% endif %}
+    </div>
+</div>
 
-{% endblock %}
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Localisation</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12 col-md-3">
+                {{ form_row(form.city) }}
+            </div>
+            <div class="col-12 col-md-5">
+                {{ form_row(form.district) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section card mb-3">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-12">
+                <h5 class="h5-responsive font-weight-stone-500 text-dark">Status</h5>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-center justify-content-md-start">
+            <div class="col-12 col-md-3">
+                {{ form_widget(form.enabled) }}
+            </div>
+        </div>
+    </div>
+</div>
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <link rel="index" title="Balise Meta" href="{{ app.request.schemeAndHttpHost }}/" />
+        <link rel="canonical" href="{{ app.request.schemeAndHttpHost }}/" />
+        <link rel="shortcut icon" href="{{ app.request.relativeUriForPath(asset('favicon.ico')) }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,800,900&display=swap">
+
+        {% block stylesheets %}
+            {{ include('ui/_stylesheets.html.twig', {'path': 'assets/css/bootstrap.min.css'}) }}
+            {{ include('ui/_stylesheets.html.twig', {'path': 'assets/css/app.min.css'}) }}
+            {{ include('ui/_stylesheets.html.twig', {'path': 'assets/css/style.css'}) }}
+        {% endblock %}
+        {% block javascripts %}
+            {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/jquery.min.js'}) }}
+            {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/popper.min.js'}) }}
+            {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/bootstrap.min.js'}) }}
+            {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/app.min.js'}) }}
+            {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/function.js'}) }}
+        {% endblock %}
+    </head>
+    <body class="fixed-sn skin-light">
+        <header>{% block app_navbar %}{% endblock %}</header>
+
+        <main class="px-3 px-md-1">{% block app_body %}{% endblock %}</main>
+    </body>
+</html>

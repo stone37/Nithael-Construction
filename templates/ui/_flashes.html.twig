@@ -1,10 +1,6 @@
-{% extends 'form_div_layout.html.twig' %}
-
-{% block form_row %}
-
-{% endblock %}
-
-{% block choice_widget_collapsed %}
-
-{% endblock %}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="notify" app-data="{{ label }}" style="display: none;">{{ message }}</div>
+    {% endfor %}
+{% endfor %}
 

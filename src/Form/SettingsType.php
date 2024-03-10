@@ -33,6 +33,8 @@ class SettingsType extends AbstractType
                 'required' => false
             ])
             ->add('city', TextType::class, ['label' => 'Ville (facultatif)', 'required' => false])
+            ->add('longitude', TextType::class, ['label' => 'Longitude (facultatif)', 'required' => false])
+            ->add('latitude', TextType::class, ['label' => 'Latitude (facultatif)', 'required' => false])
             ->add('facebookAddress', TextType::class, ['label' => 'Adresse Facebook (facultatif)', 'required' => false])
             ->add('twitterAddress', TextType::class, ['label' => 'Adresse Twitter (facultatif)', 'required' => false])
             ->add('linkedinAddress', TextType::class, ['label' => 'Adresse Linkedin (facultatif)', 'required' => false])

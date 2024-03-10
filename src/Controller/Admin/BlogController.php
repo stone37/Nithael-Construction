@@ -19,8 +19,8 @@ class BlogController extends CrudController
     protected string $templatePath = 'blog';
     protected string $routePrefix = 'app_admin_blog';
     protected string $createFlashMessage = 'Un article a été crée';
-    protected string $editFlashMessage = 'Une article a été mise à jour';
-    protected string $deleteFlashMessage = 'L\'article a été supprimé';
+    protected string $editFlashMessage = 'Un article a été mise à jour';
+    protected string $deleteFlashMessage = 'Un article a été supprimé';
     protected string $deleteMultiFlashMessage = 'Les articles ont été supprimés';
     protected string $deleteErrorFlashMessage = 'Désolé, les articles n\'a pas pu être supprimé !';
     protected array $events = [

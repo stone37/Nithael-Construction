@@ -8,7 +8,6 @@ use App\Entity\Traits\PositionTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\CarouselItemRepository;
 use DateTime;
-use Doctrine\DBAL\Types\Types;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
@@ -30,11 +29,9 @@ class CarouselItem
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $description = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $url = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Advert $advert = null;
 
     #[Vich\UploadableField(
         mapping: 'carousel',
@@ -62,26 +59,14 @@ class CarouselItem
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getAdvert(): ?Advert
     {
-        return $this->description;
+        return $this->advert;
     }
 
-    public function setDescription(?string $description): self
+    public function setAdvert(?Advert $advert): self
     {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    public function setUrl(?string $url): self
-    {
-        $this->url = $url;
+        $this->advert = $advert;
 
         return $this;
     }

@@ -16,6 +16,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: AdvertRepository::class)]
 class Advert
 {
+    const TYPE_OFFER = 'Vente';
+    const TYPE_LOCATION = 'Location';
+
     use EnabledTrait;
     use PositionTrait;
     use TimestampableTrait;
@@ -34,22 +37,21 @@ class Advert
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $slug = null;
 
+    #[ORM\Column(length: 120, nullable: true)]
+    private ?string $type = self::TYPE_OFFER;
+
     #[Assert\NotBlank]
     #[Assert\Length(min: 10)]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[Assert\NotBlank]
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
-
-    #[ORM\ManyToOne]
-    private ?Category $category = null;
 
     #[Assert\NotBlank]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Category $subCategory = null;
+    private ?AdvertCategory $category = null;
 
     #[Assert\NotBlank]
     #[ORM\Column(length: 100, nullable: true)]
@@ -59,14 +61,21 @@ class Advert
     private ?string $district = null;
 
     #[ORM\Column(nullable: true)]
+    private ?int $numberOfViews = null;
+
+    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'VILLA', 'STUDIO', 'TERRAIN', 'ESPACE_COMMERCIAUX'])]
+    #[ORM\Column(nullable: true)]
     private ?int $surface = null;
 
+    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'VILLA'])]
     #[ORM\Column(nullable: true)]
     private ?int $nombrePiece = null;
 
+    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'VILLA'])]
     #[ORM\Column(nullable: true)]
     private ?int $nombreChambre = null;
 
+    #[Assert\NotBlank(groups: ['APPARTEMENT', 'MAISON', 'VILLA'])]
     #[ORM\Column(nullable: true)]
     private ?int $nombreSalleBain = null;
 
@@ -76,22 +85,11 @@ class Advert
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $standing = null;
 
-    #[ORM\Column]
-    private ?bool $isPayment = false;
-
-    #[ORM\OneToMany(mappedBy: 'adverts', targetEntity: AdvertRead::class, orphanRemoval: true)]
-    private Collection $reads;
-
-    #[ORM\OneToMany(mappedBy: 'advert', targetEntity: Message::class, orphanRemoval: true)]
-    private Collection $messages;
-
-    #[ORM\OneToMany(mappedBy: 'adverts', targetEntity: Gallery::class, orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: AdvertPicture::class, mappedBy: 'advert', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $pictures;
 
     public function __construct()
     {
-        $this->reads = new ArrayCollection();
-        $this->messages = new ArrayCollection();
         $this->pictures = new ArrayCollection();
     }
 
@@ -124,6 +122,18 @@ class Advert
         return $this;
     }
 
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
@@ -148,26 +158,14 @@ class Advert
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getCategory(): ?AdvertCategory
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    public function setCategory(?AdvertCategory $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    public function getSubCategory(): ?Category
-    {
-        return $this->subCategory;
-    }
-
-    public function setSubCategory(?Category $subCategory): self
-    {
-        $this->subCategory = $subCategory;
 
         return $this;
     }
@@ -192,6 +190,18 @@ class Advert
     public function setDistrict(?string $district): self
     {
         $this->district = $district;
+
+        return $this;
+    }
+
+    public function getNumberOfViews(): ?int
+    {
+        return $this->numberOfViews;
+    }
+
+    public function setNumberOfViews(?int $numberOfViews): self
+    {
+        $this->numberOfViews = $numberOfViews;
 
         return $this;
     }
@@ -286,89 +296,29 @@ class Advert
     }
 
     /**
-     * @return Collection<int, AdvertRead>
-     */
-    public function getReads(): Collection
-    {
-        return $this->reads;
-    }
-
-    public function addRead(AdvertRead $read): self
-    {
-        if (!$this->reads->contains($read)) {
-            $this->reads[] = $read;
-            $read->setAdverts($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRead(AdvertRead $read): self
-    {
-        if ($this->reads->removeElement($read)) {
-            // set the owning side to null (unless already changed)
-            if ($read->getAdverts() === $this) {
-                $read->setAdverts(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Message>
-     */
-    public function getMessages(): Collection
-    {
-        return $this->messages;
-    }
-
-    public function addMessage(Message $message): self
-    {
-        if (!$this->messages->contains($message)) {
-            $this->messages[] = $message;
-            $message->setAdvert($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMessage(Message $message): self
-    {
-        if ($this->messages->removeElement($message)) {
-            // set the owning side to null (unless already changed)
-            if ($message->getAdvert() === $this) {
-                $message->setAdvert(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Gallery>
+     * @return Collection<int, AdvertPicture>
      */
     public function getPictures(): Collection
     {
         return $this->pictures;
     }
 
-    public function addPicture(Gallery $picture): self
+    public function addPicture(AdvertPicture $picture): self
     {
         if (!$this->pictures->contains($picture)) {
             $this->pictures[] = $picture;
-            $picture->setAdverts($this);
+            $picture->setAdvert($this);
         }
 
         return $this;
     }
 
-    public function removePicture(Gallery $picture): self
+    public function removePicture(AdvertPicture $picture): self
     {
         if ($this->pictures->removeElement($picture)) {
             // set the owning side to null (unless already changed)
-            if ($picture->getAdverts() === $this) {
-                $picture->setAdverts(null);
+            if ($picture->getAdvert() === $this) {
+                $picture->setAdvert(null);
             }
         }
 

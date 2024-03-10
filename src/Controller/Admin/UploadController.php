@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Controller\Traits\ControllerTrait;
 use App\Controller\Traits\UploadTrait;
@@ -20,7 +20,7 @@ class UploadController extends AbstractController
     use ControllerTrait;
     use UploadTrait;
 
-    #[Route(path: '/upload/image', name: 'app_image_upload_add', options: ['expose' => true])]
+    #[Route(path: '/upload/image', name: 'app_image_upload_add')]
     public function add(Request $request): NotFoundHttpException|JsonResponse
     { 
         if (!$request->isXmlHttpRequest()) {
@@ -40,8 +40,8 @@ class UploadController extends AbstractController
         return new JsonResponse();
     }
 
-    #[Route(path: '/upload/image/{pos}/delete', name: 'app_image_upload_delete', requirements: ['pos' => '\d+'], options: ['expose' => true])]
-    public function delete(Request $request, $pos): NotFoundHttpException|JsonResponse
+    #[Route(path: '/upload/image/delete', name: 'app_image_upload_delete')]
+    public function delete(Request $request): NotFoundHttpException|JsonResponse
     {
         if (!$request->isXmlHttpRequest()) {
             $this->createNotFoundException('Bad request');
@@ -50,6 +50,12 @@ class UploadController extends AbstractController
         if (!$request->getSession()->has($this->provideKey())) {
             return $this->createNotFoundException('Bad request');
         }
+
+        if (!$request->query->has('pos')) {
+            return $this->createNotFoundException('Bad request');
+        }
+
+        $pos = $request->query->get('pos');
 
         $data = $request->getSession()->get($this->provideKey());
 
@@ -67,39 +73,6 @@ class UploadController extends AbstractController
             array_splice($data, $pos, 1);
             $request->getSession()->set($this->provideKey(), $data);
         }
-
-        return new JsonResponse();
-    }
-
-    #[Route(path: '/upload/image/principale', name: 'app_image_upload_principale', options: ['expose' => true])]
-    public function principale(Request $request): NotFoundHttpException|JsonResponse
-    {
-        if (!$request->isXmlHttpRequest()) {
-            $this->createNotFoundException('Bad request');
-        }
-
-        if (!$request->getSession()->has($this->provideKey())) {
-            return $this->createNotFoundException('Bad request');
-        }
-
-        $pos = $request->query->get('pos');
-        $data = $request->getSession()->get($this->provideKey());
-
-        $array = [];
-
-        foreach ($data as $cle => $values) {
-            if ($cle == $pos) {
-                foreach ($values as $key => $value) {
-                    $array[] = [$key => 1];
-                }
-            } else {
-                foreach ($values as $key => $value) {
-                    $array[] = [$key => 0];
-                }
-            }
-        }
-
-        $request->getSession()->set($this->provideKey(), $array);
 
         return new JsonResponse();
     }

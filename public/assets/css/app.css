@@ -2359,47 +2359,47 @@ strong {
 }
 
 .pattern-1 {
-    background: url(../img/overlays/01.png);
+    background: url(../images/overlays/01.png);
     background-attachment: fixed
 }
 
 .pattern-2 {
-    background: url(../img/overlays/02.png);
+    background: url(../images/overlays/02.png);
     background-attachment: fixed
 }
 
 .pattern-3 {
-    background: url(../img/overlays/03.png);
+    background: url(../images/overlays/03.png);
     background-attachment: fixed
 }
 
 .pattern-4 {
-    background: url(../img/overlays/04.png);
+    background: url(../images/overlays/04.png);
     background-attachment: fixed
 }
 
 .pattern-5 {
-    background: url(../img/overlays/05.png);
+    background: url(../images/overlays/05.png);
     background-attachment: fixed
 }
 
 .pattern-6 {
-    background: url(../img/overlays/06.png);
+    background: url(../images/overlays/06.png);
     background-attachment: fixed
 }
 
 .pattern-7 {
-    background: url(../img/overlays/07.png);
+    background: url(../images/overlays/07.png);
     background-attachment: fixed
 }
 
 .pattern-8 {
-    background: url(../img/overlays/08.png);
+    background: url(../images/overlays/08.png);
     background-attachment: fixed
 }
 
 .pattern-9 {
-    background: url(../img/overlays/09.png);
+    background: url(../images/overlays/09.png);
     background-attachment: fixed
 }
 
@@ -10627,11 +10627,11 @@ body.scrollable {
 }
 
 .carousel .carousel-control-prev-icon {
-    background-image: url(../img/svg/arrow_left.svg)
+    background-image: url(../images/svg/arrow_left.svg)
 }
 
 .carousel .carousel-control-next-icon {
-    background-image: url(../img/svg/arrow_right.svg)
+    background-image: url(../images/svg/arrow_right.svg)
 }
 
 .carousel .carousel-indicators li {
@@ -16035,7 +16035,7 @@ table.table a.btn.btn-whatsapp {
 }
 
 .pswp__preloader--active .pswp__preloader__icn {
-    background: url(../img/lightbox/preloader.gif) 0 0 no-repeat
+    background: url(../images/lightbox/preloader.gif) 0 0 no-repeat
 }
 
 .pswp--css_animation .pswp__preloader--active {

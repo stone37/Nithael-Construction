@@ -1,0 +1,10 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'filter-form'}}) }}
+    <div class="form-row">
+        <div class="col-12 col-md-3 mb-3">{{ form_widget(form.category) }}</div>
+        <div class="col-12 col-md-3 mb-3">{{ form_widget(form.type) }}</div>
+        <div class="col-12 col-md-3 mb-3">{{ form_widget(form.city) }}</div>
+        <div class="col-12 col-md-3">
+            <button class="btn btn-primary btn-md btn-block z-depth-0" type="submit">Mettre à jour</button>
+        </div>
+    </div>
+{{ form_end(form, {'render_rest': false}) }}

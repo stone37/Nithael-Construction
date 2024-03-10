@@ -15,8 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class MaintenanceController extends AbstractController
 {
     public function __construct(
-        private MaintenanceConfigurationExporter $maintenanceExporter,
-        private MaintenanceConfigurationFactory $configurationFactory
+        private readonly MaintenanceConfigurationExporter $maintenanceExporter,
+        private readonly MaintenanceConfigurationFactory $configurationFactory
     ) {
     }
 

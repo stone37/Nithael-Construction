@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class NewsletterValidator
 {
-    public function __construct(private ValidatorInterface $validator)
+    public function __construct(private readonly ValidatorInterface $validator)
     {
     }
 

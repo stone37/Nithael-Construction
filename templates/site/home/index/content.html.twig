@@ -1,0 +1,29 @@
+{% set settings = config.get %}
+
+<section class="container wow fadeIn my-lg-5 mt-5 mb-4">
+    <div class="row">
+        <div class="col-12 col-md-4 wow fadeInLeft" data-wow-delay="0.3s">
+            <img src="{{ asset('assets/images/architecture.jpg') }}" alt="illustration" class="img-fluid mb-3 rounded" />
+        </div>
+        <div class="col-12 col-md-8">
+            <h1 class="h2-responsive font-weight-bold text-dark mb-3 wow fadeInUp" data-wow-delay="0.3s">
+                Plongez dans l'excellence immobilière avec <strong class="font-weight-bold text-primary">{{ settings.name }}</strong>
+            </h1>
+            <p class="wow fadeInRight" data-wow-delay="0.3s">
+                Plongez dans l'univers de <strong class="font-weight-bold text-primary">{{ settings.name }}</strong>, une référence
+                en matière d'immobilier en Côte d'Ivoire. Que vous envisagiez d'acheter votre première maison, de construire
+                un projet d'envergure ou d'investir dans l'immobilier, notre équipe dédiée est là pour vous accompagner à chaque étape.
+                Nous mettons un point d'honneur à vous offrir un service personnalisé, professionnel et attentif à vos besoins, en
+                mettant en avant nos valeurs de qualité, d'innovation et d'engagement. Avec
+                <strong class="font-weight-bold text-primary">{{ settings.name }}</strong>, votre projet immobilier
+                devient une réalité.
+            </p>
+        </div>
+    </div>
+</section>
+
+{{ render(controller('App\\Controller\\AdvertController::partial')) }}
+
+{{ render(controller('App\\Controller\\BlogController::partial')) }}
+
+{{ render(controller('App\\Controller\\ReferenceController::index')) }}

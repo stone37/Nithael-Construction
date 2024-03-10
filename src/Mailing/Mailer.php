@@ -2,25 +2,31 @@
 
 namespace App\Mailing;
 
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Crypto\DkimSigner;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Message;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class Mailer
 {
-    private Environment $twig;
-    private MailerInterface $mailer;
-    private ?string $dkimKey;
-
-    public function __construct(Environment $twig, MailerInterface $mailer, ?string $dkimKey = null)
+    public function __construct(
+        private readonly Environment     $twig,
+        private readonly MailerInterface $mailer,
+        private readonly ?string         $dkimKey = null
+    )
     {
-        $this->twig = $twig;
-        $this->mailer = $mailer;
-        $this->dkimKey = $dkimKey;
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function createEmail(string $template, array $data = []): Email
     {
         $this->twig->addGlobal('format', 'html');
@@ -29,11 +35,14 @@ class Mailer
         $text = $this->twig->render($template, array_merge($data, ['layout' => 'mails/base.text.twig']));
 
         return (new Email())
-            ->from('noreply@example.com')
+            ->from('noreply@nithaelconstruction.com')
             ->html($html)
             ->text($text);
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function send(Email $email): void
     {
         if ($this->dkimKey) {

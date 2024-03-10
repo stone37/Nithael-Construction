@@ -7,13 +7,22 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "beberlei/doctrineextensions": "^1.1",
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.0",
+        "erusev/parsedown": "^1.7",
+        "friendsofsymfony/ckeditor-bundle": "^2.5",
+        "geertw/ip-anonymizer": "^1.1",
+        "google/apiclient": "^2.15",
+        "google/recaptcha": "^1.3",
+        "knplabs/knp-paginator-bundle": "^5.8",
+        "liip/imagine-bundle": "^2.12",
+        "mhujer/breadcrumbs-bundle": "^1.5",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.25",
+        "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/asset": "6.4.*",
-        "symfony/asset-mapper": "6.4.*",
         "symfony/console": "6.4.*",
         "symfony/doctrine-messenger": "6.4.*",
         "symfony/dotenv": "6.4.*",
@@ -33,16 +42,19 @@
         "symfony/runtime": "6.4.*",
         "symfony/security-bundle": "6.4.*",
         "symfony/serializer": "6.4.*",
-        "symfony/stimulus-bundle": "^2.14",
         "symfony/string": "6.4.*",
         "symfony/translation": "6.4.*",
         "symfony/twig-bundle": "6.4.*",
-        "symfony/ux-turbo": "^2.14",
         "symfony/validator": "6.4.*",
         "symfony/web-link": "6.4.*",
         "symfony/yaml": "6.4.*",
+        "twig/cssinliner-extra": "^3.4",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/intl-extra": "^3.4",
+        "twig/markdown-extra": "^3.4",
+        "twig/string-extra": "^3.4",
+        "twig/twig": "^2.12|^3.0",
+        "vich/uploader-bundle": "^2.3"
     },
     "config": {
         "allow-plugins": {
@@ -75,7 +87,7 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "importmap:install": "symfony-cmd"
+            "ckeditor:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

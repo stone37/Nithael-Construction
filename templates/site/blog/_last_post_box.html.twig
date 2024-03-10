@@ -1,10 +1,27 @@
-{% extends 'site/layout.html.twig' %}
+{% set image_last_state = vich_uploader_asset(lastPost, 'file') %}
 
-{% block app_intro %}
-
-{% endblock %}
-
-{% block title %}
-
-{% endblock %}
+<div class="row mt-2">
+    <div class="col-5">
+        <div class="view overlay rounded mb-2">
+            {% if image_last_state %}
+                <img src="{{ image_last_state }}" class="img-fluid" alt="Post">
+            {% else %}
+                <img src="{{ asset('assets/images/no_image.png') }}" class="img-fluid" alt="Post" >
+            {% endif %}
+            <a>
+                <div class="mask rgba-white-slight"></div>
+            </a>
+        </div>
+    </div>
+    <div class="col-7 mb-1 px-0">
+        <div class="">
+            <p class="mb-1 small-9">
+                <a href="{{ path('app_blog_show', {'slug': lastPost.slug}) }}" class="link font-weight-bold">{{ lastPost.title }}</a>
+            </p>
+            <p class="small-8 grey-text font-weight-stone-500">
+                <em>{{ lastPost.createdAt|format_datetime(pattern="dd MMM yyyy") }}</em>
+            </p>
+        </div>
+    </div>
+</div>
 

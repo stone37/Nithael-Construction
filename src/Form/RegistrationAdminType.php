@@ -18,13 +18,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationAdminType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('firstname', TextType::class, ['label' => 'Prénom'])
             ->add('lastname', TextType::class, ['label' => 'Nom'])
             ->add('email', EmailType::class, ['label' => 'Adresse e-mail'])
-            ->add('phone', TextType::class, ['label' => 'Téléphone'])
             ->add('isVerified', ChoiceType::class, [
                 'choices' => ['Oui' => true, 'Non' => false],
                 'attr' => ['class' => 'mdb-select md-outline md-form dropdown-primary'],
@@ -71,7 +70,7 @@ class RegistrationAdminType extends AbstractType
             });;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => AdminCrudData::class,

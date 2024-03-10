@@ -45,7 +45,7 @@ class EmailingRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function getAdmin(string $type): QueryBuilder
+    public function getAdmins(string $type): QueryBuilder
     {
         return $this->createQueryBuilder('e')
             ->where('e.groupe = :groupe')

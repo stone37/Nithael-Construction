@@ -7,7 +7,7 @@
     </div>
 </div>
 
-<div class="form-row mb-3">
+<div class="form-row mb-5">
     <div class="col-12 col-md-4">
         {{ form_row(form.name) }}
     </div>
@@ -46,7 +46,7 @@
 <div class="form-row mt-4 image-bulk-container">
     <div class="col-5 col-md-3 col-lg-2">
         <div class="file-field">
-            <div class="btn btn-mdb-color btn-md float-left">
+            <div class="btn btn-mdb-color btn-md float-left z-depth-0">
                 <span>Choisir un logo</span>
                 <input type="file" name="{{ form.file.vars.full_name }}" class="entity-image" />
             </div>
@@ -57,10 +57,28 @@
     </div>
 </div>
 
-<div class="form-row mt-4">
+<div class="form-row mt-5">
     <div class="col-12">
         <div class="h5-responsive border border-dark border-top-0 border-left-0 border-right-0">
             <div class="badge badge-dark d-inline-block mr-1" style="position: relative; bottom: 6px;">3</div>
+            <div class="text-dark d-inline-block font-weight-stone-500">Coordonnées géographique</div>
+        </div>
+    </div>
+</div>
+
+<div class="form-row mb-3">
+    <div class="col-12 col-md-4">
+        {{ form_row(form.latitude) }}
+    </div>
+    <div class="col-12 col-md-4">
+        {{ form_row(form.longitude) }}
+    </div>
+</div>
+
+<div class="form-row mt-5">
+    <div class="col-12">
+        <div class="h5-responsive border border-dark border-top-0 border-left-0 border-right-0">
+            <div class="badge badge-dark d-inline-block mr-1" style="position: relative; bottom: 6px;">4</div>
             <div class="text-dark d-inline-block font-weight-stone-500">Adresse sociale</div>
         </div>
     </div>

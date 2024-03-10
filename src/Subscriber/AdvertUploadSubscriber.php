@@ -13,13 +13,13 @@ use Symfony\Component\HttpFoundation\File\File;
 class AdvertUploadSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private UploadService $upload,
-        private AdvertPictureRepository $advertPictureRepository
+        private readonly UploadService  $upload,
+        private readonly AdvertPictureRepository $advertPictureRepository
     )
     {
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             AdvertPreCreateEvent::class => 'onUpload',
@@ -27,70 +27,35 @@ class AdvertUploadSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onEditUpload(AdvertPreEditEvent $event)
+    public function onEditUpload(AdvertPreEditEvent $event): void
     {
         $advert  = $event->getAdvert();
         $request = $event->getRequest();
 
         $images = $this->upload->getFilesUpload($request->getSession());
-        $session = $request->getSession()->get($this->provideKey());
-
-        $principale = [];
-        $has_principale = false;
-
-        foreach ($session as $values) {
-            foreach ($values as $key => $value) {
-                $principale[$key] = $value;
-                if ($value == 1) {
-                    $has_principale = true;
-                }
-            }
-        }
-
-        if ($has_principale) {
-            /** @var AdvertPicture $picture */
-            foreach ($advert->getImages() as $picture) {
-                $picture->setPrincipale(false);
-            }
-        }
 
         foreach ($images as $image) {
             $picture = (new AdvertPicture())
-                ->setFile(new File($image->getPathname()))
-                ->setPrincipale((bool)$principale[$image->getFilename()]);
+                ->setFile(new File($image->getPathname()));
 
-            $this->advertPictureRepository->add($picture, false);
+            $this->advertPictureRepository->add($picture);
 
-            $advert->addImage($picture);
+            $advert->addPicture($picture);
         }
     }
 
-    public function onUpload(AdvertPreCreateEvent $event)
+    public function onUpload(AdvertPreCreateEvent $event): void
     {
         $advert  = $event->getAdvert();
         $request = $event->getRequest();
 
         $images = $this->upload->getFilesUpload($request->getSession());
-        $session = $request->getSession()->get($this->provideKey());
-        $principale = [];
-
-        foreach ($session as $values) {
-            foreach ($values as $key => $value) {
-                $principale[$key] = $value;
-            }
-        }
 
         foreach ($images as $image) {
             $picture = (new AdvertPicture())
-                ->setFile(new File($image->getPathname()))
-                ->setPrincipale((bool)$principale[$image->getFilename()]);
+                ->setFile(new File($image->getPathname()));
 
-            $advert->addImage($picture);
+            $advert->addPicture($picture);
         }
-    }
-
-    private function provideKey(): string
-    {
-        return '_app_advert_images';
     }
 }

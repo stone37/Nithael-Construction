@@ -6,13 +6,9 @@ use App\Form\SettingsModuleType;
 
 class SettingsModuleCrudData extends AutomaticCrudData
 {
-    public ?bool $activeReview = null;
+    public ?bool $activeReference = null;
 
     public ?bool $activeBlog = null;
-
-    public ?bool $activeAchieve = null;
-
-    public ?bool $activeTeam = null;
 
     public function getEntity(): object
     {
@@ -27,9 +23,7 @@ class SettingsModuleCrudData extends AutomaticCrudData
     public function hydrate(): void
     {
         $this->entity
-            ->setActiveReview($this->activeReview)
-            ->setActiveBlog($this->activeBlog)
-            ->setActiveAchieve($this->activeAchieve)
-            ->setActiveTeam($this->activeTeam);
+            ->setActiveReference($this->activeReference)
+            ->setActiveBlog($this->activeBlog);
     }
 }

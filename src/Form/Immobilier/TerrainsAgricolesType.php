@@ -12,23 +12,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TerrainsAgricolesType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('type', ChoiceType::class, [
-                'choices' => [
-                    'Vente' => Advert::TYPE_OFFER,
-                    'Location' => Advert::TYPE_LOCATION,
-                    'Recherche' => Advert::TYPE_RESEARCH
-                ],
-                'expanded' => true,
-                'multiple' => false,
-                'label' => 'Type d\'annonce'
-            ])
             ->add('surface', IntegerType::class, ['label' => 'Superficie (ha)']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => ['Default', 'TERRAIN']

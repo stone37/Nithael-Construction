@@ -2,7 +2,7 @@
 
 namespace App\Data;
 
-use App\Entity\Admin;
+use App\Entity\User;
 use App\Entity\Category;
 use App\Entity\Post;
 use App\Form\PostType;
@@ -20,7 +20,7 @@ class PostCrudData implements CrudDataInterface
     #[Assert\Length(min: 10)]
     public ?string $content = null;
 
-    public ?Admin $author = null;
+    public ?User $author = null;
 
     public ?Category $category = null;
 
@@ -64,12 +64,12 @@ class PostCrudData implements CrudDataInterface
             ->setFile($this->file);
     }
 
-    public function getAuthor(): ?Admin
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(Admin $author): PostCrudData
+    public function setAuthor(User $author): PostCrudData
     {
         $this->author = $author;
 

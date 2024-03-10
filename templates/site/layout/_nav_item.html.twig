@@ -1,0 +1,34 @@
+{% set settings = config.get %}
+
+{% set home = isActive('app_home') %}
+{% set env = isActive('app_env') %}
+{% set advert_index = isActive('app_advert_index') %}
+{% set advert_show = isActive('app_advert_show') %}
+{% set service = isActive('app_service') %}
+{% set blog_index = isActive('app_blog_index') %}
+{% set blog_show = isActive('app_blog_show') %}
+{% set blog_category = isActive('app_blog_category') %}
+{% set contact = isActive('app_contact_index') %}
+
+<ul class="navbar-nav mr-auto menu ml-lg-5">
+    <li class="nav-item {% if home %}active{% endif %}">
+        <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+    </li>
+    <li class="nav-item {% if advert_index or advert_show %}active{% endif %}">
+        <a class="nav-link" href="{{ path('app_advert_index') }}">Nos offres</a>
+    </li>
+    {% if settings.activeBlog %}
+        <li class="nav-item {% if blog_index or blog_show or blog_category %}active{% endif %}">
+            <a class="nav-link" href="{{ path('app_blog_index') }}">Actualités</a>
+        </li>
+    {% endif %}
+    <li class="nav-item {% if service %}active{% endif %}">
+        <a class="nav-link" href="{{ path('app_service') }}">Nos services</a>
+    </li>
+    <li class="nav-item {% if env %}active{% endif %}">
+        <a class="nav-link" href="{{ path('app_env') }}">À propos</a>
+    </li>
+    <li class="nav-item {% if contact %}active{% endif %}">
+        <a class="nav-link" href="{{ path('app_contact_index') }}">Contact</a>
+    </li>
+</ul>

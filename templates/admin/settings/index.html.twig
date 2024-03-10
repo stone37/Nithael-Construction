@@ -9,9 +9,3 @@
 
     {{ include('admin/settings/index/_content.html.twig') }}
 {% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/admin/create.js'}) }}
-{% endblock %}

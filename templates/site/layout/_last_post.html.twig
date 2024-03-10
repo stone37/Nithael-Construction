@@ -1,0 +1,12 @@
+{% if lastPosts|length > 0 %}
+    <section>
+        <div class="card mb-5">
+            <div class="card-body p-3">
+                <h4 class="h4-responsive font-weight-bold text-dark mb-4">Articles récents</h4>
+                {% for lastPost in lastPosts %}
+                    {{ include('site/blog/_last_post_box.html.twig') }}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endif %}

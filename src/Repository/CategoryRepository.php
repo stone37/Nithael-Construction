@@ -59,4 +59,22 @@ class CategoryRepository extends ServiceEntityRepository
             return $d[0];
         }, $data);
     }
+
+    public function getEnabledBySlug(string $slug): ?Category
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->where('c.enabled = true')
+            ->andWhere('c.slug = :slug')
+            ->setParameter('slug', $slug);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function getCategories(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.enabled = true')
+            ->getQuery()
+            ->getResult();
+    }
 }

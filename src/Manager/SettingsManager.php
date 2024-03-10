@@ -7,11 +7,8 @@ use App\Repository\SettingsRepository;
 
 class SettingsManager
 {
-    private SettingsRepository $repository;
-
-    public function __construct(SettingsRepository $repository)
+    public function __construct(private readonly SettingsRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function get(): ?Settings

@@ -1,10 +1,143 @@
-{% extends 'form_div_layout.html.twig' %}
+<footer class="page-footer text-center text-md-left pt-4">
 
-{% block form_row %}
+    {% set settings = config.get %}
 
-{% endblock %}
+    <div class="container-fluid font-weight-normal">
+        <div class="row text-center text-md-left mt-3 pb-3">
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                <p>
+                    <a href="{{ path('app_home') }}" class="d-block mb-2">
+                        <img src="{{ asset('assets/images/logo/write.png') }}" alt="{{ settings.name }}" title="{{ settings.name }}" class="logo img-fluid">
+                    </a>
+                </p>
+                <p>
+                    <a href="{{ path('app_advert_index') }}" class="footer-link">Nos offres</a>
+                </p>
+                {% if settings.activeBlog %}
+                    <p>
+                        <a href="{{ path('app_blog_index') }}" class="footer-link">Notre actualités</a>
+                    </p>
+                {% endif %}
+                <p>
+                    <a href="{{ path('app_service') }}" class="footer-link">Nos services</a>
+                </p>
+            </div>
 
-{% block choice_widget_collapsed %}
+            <hr class="w-100 clearfix d-md-none">
 
-{% endblock %}
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                <h4 class="h4-responsive mb-4 font-weight-normal">Liens utiles</h4>
+                <p>
+                    <a href="{{ path('app_env') }}" class="footer-link">À propos de l'entreprise</a>
+                </p>
+                <p>
+                    <a href="{{ path('app_contact_index') }}" class="footer-link">Contactez-nous</a>
+                </p>
+            </div>
+
+            <hr class="w-100 clearfix d-md-none">
+
+            <div class="col-md-5 col-lg-3 col-xl-3 mx-auto mt-3">
+                <h4 class="h4-responsive mb-4 font-weight-normal">Contact</h4>
+                {% if settings.address %}
+                    <p>
+                        <span class="btn-floating btn-sm btn-white mr-1">
+                            <i class="fas fa-home text-secondary"></i>
+                        </span>
+                        {{ settings.address }}
+                    </p>
+                {% endif %}
+                <p>
+                    <span class="btn-floating btn-sm btn-white mr-1">
+                        <i class="fas fa-envelope text-secondary"></i>
+                    </span>
+                    {{ settings.email }}
+                </p>
+                <p>
+                    <span class="btn-floating btn-sm btn-white mr-1">
+                        <i class="fas fa-phone-alt text-secondary"></i>
+                    </span>
+                    {{ settings.phone }}
+                </p>
+
+                {% if settings.fax %}
+                    <p>
+                        <span class="btn-floating btn-sm btn-white mr-1">
+                            <i class="fas fa-print text-secondary"></i>
+                        </span>
+                        {{ settings.fax }}
+                    </p>
+                {% endif %}
+                <p class="d-flex">
+                    <span class="btn-floating btn-sm btn-white mr-2">
+                        <i class="far fa-calendar-alt text-secondary"></i>
+                    </span>
+                    <span class="data">
+                        Lundi - Vendredi (08h00 à 17h00) <br>
+                        Samedi (09h00 à 13h00)
+                    </span>
+                </p>
+            </div>
+        </div>
+        <hr>
+
+        <div class="row py-3 d-flex align-items-center">
+            <div class="col-md-7 col-lg-8">
+                <p class="text-center text-md-left grey-text copyright">
+                    © 2024 Copyright: <a href="{{ path('app_home')}}" class="font-weight-stone-500" target="_blank">{{ settings.name }}</a> | Tous droits réservés
+                </p>
+            </div>
+            <div class="col-md-5 col-lg-4 ml-lg-0">
+                <div class="social-section text-center text-md-left">
+                    <ul class="list-unstyled list-inline">
+                        {% if settings.facebookAddress %}
+                            <li  class="list-inline-item mx-0">
+                                <a target="_blank" href="{{ settings.facebookAddress }}" class="btn-floating btn-sm rgba-white-slight mr-xl-4">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if settings.twitterAddress %}
+                            <li class="list-inline-item mx-0">
+                                <a target="_blank" href="{{ settings.twitterAddress }}" class="btn-floating btn-sm rgba-white-slight mr-xl-4">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if settings.youtubeAddress %}
+                            <li class="list-inline-item mx-0">
+                                <a target="_blank" href="{{ settings.youtubeAddress }}" class="btn-floating btn-sm rgba-white-slight mr-xl-4">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if settings.instagramAddress %}
+                            <li class="list-inline-item mx-0">
+                                <a target="_blank" href="{{ settings.instagramAddress }}" class="btn-floating btn-sm rgba-white-slight mr-xl-4">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if settings.linkedinAddress %}
+                            <li class="list-inline-item mx-0">
+                                <a target="_blank" href="{{ settings.linkedinAddress }}" class="btn-floating btn-sm rgba-white-slight mr-xl-4">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+
 

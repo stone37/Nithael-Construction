@@ -3,8 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Data\CrudDataInterface;
-use App\Entity\Admin;
+use App\Entity\User;
 use App\Paginator\PaginatorInterface;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -21,14 +22,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @template E
  *
- * @method Admin|UserInterface getUser()
+ * @method User|UserInterface getUser()
  */
 abstract class CrudController extends AbstractController
 {
     protected string $entity = '';
     protected string $templatePath = '';
     protected string $routePrefix = '';
-    protected string $searchField = '';
     protected string $createFlashMessage = '';
     protected string $editFlashMessage = '';
     protected string $deleteFlashMessage = '';
@@ -43,34 +43,27 @@ abstract class CrudController extends AbstractController
     ];
 
     public function __construct(
-        protected EntityManagerInterface $em,
-        protected PaginatorInterface $paginator,
-        private EventDispatcherInterface $dispatcher,
-        private RequestStack $requestStack
+        protected EntityManagerInterface          $em,
+        protected PaginatorInterface              $paginator,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly RequestStack $requestStack
     )
     {
     }
 
-    public function crudIndex(QueryBuilder $query = null): Response
+    public function crudIndex(QueryBuilder $query = null, FormInterface $form = null, int|object $pathType = null): Response
     {
-        //$request = $this->requestStack->getCurrentRequest();
-
         $query = $query ?: $this->getRepository()
             ->createQueryBuilder('row')
             ->orderBy('row.createdAt', 'DESC');
-
-        /*if ($request->get('q')) {
-            $query = $this->applySearch(trim($request->get('q')), $query);
-        }
-
-        $this->paginator->allowSort('row.id', 'row.title');*/
 
         $rows = $this->paginator->paginate($query->getQuery());
 
         return $this->render('admin/'. $this->templatePath .'/index.html.twig', [
             'rows' => $rows,
-            'searchable' => true,
-            'prefix' => $this->routePrefix
+            'prefix' => $this->routePrefix,
+            'searchForm' => $form?->createView(),
+            'type' => $pathType
         ]);
     }
 
@@ -86,6 +79,13 @@ abstract class CrudController extends AbstractController
             $data->hydrate();
             /** @var E $entity */
             $entity = $data->getEntity();
+
+            if (property_exists($entity, 'createdAt')) {
+                if (!$entity->getCreatedAt()) {
+                    $entity->setCreatedAt(new DateTime());
+                }
+                $entity->setUpdatedAt(new DateTime());
+            }
 
             $this->em->persist($entity);
             $this->em->flush();
@@ -113,6 +113,11 @@ abstract class CrudController extends AbstractController
 
             /** @var E $entity */
             $entity = $data->getEntity();
+
+            if (property_exists($entity, 'createdAt')) {
+                $entity->setCreatedAt(new DateTime());
+                $entity->setUpdatedAt(new DateTime());
+            }
 
             $this->em->persist($entity);
             $this->em->flush();
@@ -145,6 +150,10 @@ abstract class CrudController extends AbstractController
             $old = clone $entity;
             $data->hydrate();
 
+            if (property_exists($entity, 'createdAt')) {
+                $entity->setUpdatedAt(new DateTime());
+            }
+
             $this->em->flush();
 
             if ($this->events['update'] ?? null) {
@@ -170,6 +179,9 @@ abstract class CrudController extends AbstractController
 
             if ($pos >= 0) {
                 $entity->setPosition($pos);
+                if (property_exists($entity, 'createdAt')) {
+                    $entity->setUpdatedAt(new DateTime());
+                }
                 $this->em->flush();
 
                 $this->addFlash('success', 'La position a été modifier');

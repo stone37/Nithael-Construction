@@ -7,14 +7,3 @@
 
     {% include 'admin/emailing/create/_content.html.twig' %}
 {% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    {% include 'Ui/_javascripts.html.twig' with {'path': 'assets/js/admin/create.js'} %}
-{% endblock %}
-

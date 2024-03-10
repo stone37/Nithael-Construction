@@ -4,11 +4,15 @@ namespace App\Data;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ContactData
+class AdvertMessageData
 {
     #[Assert\NotBlank]
     #[Assert\Length(min: 3)]
-    public ?string $name = null;
+    public ?string $firstname = null;
+
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3)]
+    public ?string $lastname = null;
 
     #[Assert\NotBlank]
     #[Assert\Email]

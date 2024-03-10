@@ -8,13 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ReferenceController extends AbstractController
 {
-    public function __construct(private ReferenceRepository $repository)
+    public function __construct(private readonly ReferenceRepository $repository)
     {
     }
 
     public function index(): Response
     {
-        return $this->render('site/reference/index.html.twig', ['references' => $this->repository->queryAll()]);
+        return $this->render('site/layout/_reference.html.twig', ['references' => $this->repository->queryAll()]);
     }
 }
 

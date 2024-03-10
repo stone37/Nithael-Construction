@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Data\ContactData;
+use App\Data\AdvertMessageData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -11,12 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ContactType extends AbstractType
+class AdvertMessageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, ['label' => 'Nom et prénom'])
+            ->add('lastname', TextType::class, ['label' => 'Nom'])
+            ->add('firstname', TextType::class, ['label' => 'Prénom'])
             ->add('email', EmailType::class, ['label' => 'Adresse email'])
             ->add('phone', TextType::class, ['label' => 'Numéro de téléphone'])
             ->add('content',  TextareaType::class, [
@@ -32,7 +33,7 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ContactData::class
+            'data_class' => AdvertMessageData::class
         ]);
     }
 }

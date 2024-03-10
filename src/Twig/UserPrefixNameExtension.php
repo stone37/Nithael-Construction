@@ -8,7 +8,7 @@ use Twig\TwigFunction;
 
 class UserPrefixNameExtension extends AbstractExtension
 {
-    public function __construct(private UserPrefixNameUtil $prefix)
+    public function __construct(private readonly UserPrefixNameUtil $prefix)
     {
     }
 

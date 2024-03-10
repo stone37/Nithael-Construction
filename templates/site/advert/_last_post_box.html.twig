@@ -1,10 +1,30 @@
-{% extends 'site/layout.html.twig' %}
+<div class="row mt-2">
+    <div class="col-5">
+        <div class="view overlay rounded mb-2">
+            {% if advert.pictures|length > 0 %}
+                <img src="{{ asset(advert.pictures[0].webPath) }}" class="img-fluid" alt="Post">
+            {% else %}
+                <img src="{{ asset('assets/images/no_image.png') }}" class="img-fluid" alt="Post" >
+            {% endif %}
+            <a>
+                <div class="mask rgba-white-slight"></div>
+            </a>
+        </div>
+    </div>
+    <div class="col-7 mb-1 px-0">
+        <div class="">
+            <p class="mb-1 small-9">
+                <a href="{{ path('app_advert_show', {'slug': advert.slug}) }}" class="link font-weight-bold">{{ advert.title }}</a>
+            </p>
+            <div class="small-9 text-danger font-weight-bold">
+                {% if advert.price %}
+                    {{ advert.price|format_currency('XOF') }}
+                {% else %}
+                    Prix sur demande
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 
-{% block app_intro %}
-
-{% endblock %}
-
-{% block title %}
-
-{% endblock %}
 

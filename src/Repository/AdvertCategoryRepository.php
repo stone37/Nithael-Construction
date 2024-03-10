@@ -2,27 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Category;
+use App\Entity\AdvertCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Category>
+ * @extends ServiceEntityRepository<AdvertCategory>
  *
- * @method Category|null find($id, $lockMode = null, $lockVersion = null)
- * @method Category|null findOneBy(array $criteria, array $orderBy = null)
- * @method Category[]    findAll()
- * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method AdvertCategory|null find($id, $lockMode = null, $lockVersion = null)
+ * @method AdvertCategory|null findOneBy(array $criteria, array $orderBy = null)
+ * @method AdvertCategory[]    findAll()
+ * @method AdvertCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CategoryRepository extends ServiceEntityRepository
+class AdvertCategoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Category::class);
+        parent::__construct($registry, AdvertCategory::class);
     }
 
-    public function save(Category $entity, bool $flush = false): void
+    public function save(AdvertCategory $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -31,7 +30,7 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Category $entity, bool $flush = false): void
+    public function remove(AdvertCategory $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,23 +39,13 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @return Category[]
-     */
-    public function findWithCount(): array
+    public function getEnabledBySlug(string $slug): ?AdvertCategory
     {
-        $data = $this->createQueryBuilder('c')
-            ->join('c.posts', 'p')
-            ->where('p.online = true')
-            ->groupBy('c.id')
-            ->select('c', 'COUNT(c.id) as count')
+        return $this->createQueryBuilder('c')
+            ->where('c.enabled = true')
+            ->andWhere('c.slug = :slug')
+            ->setParameter('slug', $slug)
             ->getQuery()
-            ->getResult();
-
-        return array_map(function (array $d) {
-            $d[0]->setPostsCount((int) $d['count']);
-
-            return $d[0];
-        }, $data);
+            ->getOneOrNullResult();
     }
 }

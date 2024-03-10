@@ -4,7 +4,7 @@
 namespace App\Form;
 
 
-use App\Repository\CategoryRepository;
+use App\Repository\AdvertCategoryRepository;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -12,9 +12,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoryChoiceType extends AbstractType
+class AdvertCategoryChoiceType extends AbstractType
 {
-    public function __construct(private readonly CategoryRepository $repository)
+    public function __construct(private readonly AdvertCategoryRepository $repository)
     {
     }
 
@@ -29,7 +29,7 @@ class CategoryChoiceType extends AbstractType
     {
         $resolver->setDefaults([
             'choices' => fn(Options $options): array => $this->repository->findBy(['enabled' => true], ['position' => 'asc']),
-            'choice_value' => 'id',
+            'choice_value' => 'slug',
             'choice_label' => 'name',
             'choice_translation_domain' => false,
         ]);
@@ -42,6 +42,6 @@ class CategoryChoiceType extends AbstractType
 
     public function getBlockPrefix(): string
     {
-        return 'app_category_choice';
+        return 'app_advert_category_choice';
     }
 }

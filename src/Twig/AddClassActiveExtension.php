@@ -8,11 +8,11 @@ use Twig\TwigFunction;
 
 class AddClassActiveExtension extends AbstractExtension
 {
-    public function __construct(private AddClassActiveUtil $util)
+    public function __construct(private readonly AddClassActiveUtil $util)
     {
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array(
             new TwigFunction('isActive', [$this->util, 'verify'])

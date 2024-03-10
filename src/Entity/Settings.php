@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: SettingsRepository::class)]
@@ -23,12 +24,16 @@ class Settings
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(nullable: true)]
     private ?string $name = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Email]
     #[ORM\Column(nullable: true)]
     private ?string $email = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(nullable: true)]
     private ?string $phone = null;
 
@@ -63,16 +68,16 @@ class Settings
     private ?string $linkedinAddress = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $activeReview = null;
+    private ?string $longitude = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $latitude = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $activeBlog = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $activeAchieve = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $activeTeam = null;
+    private ?bool $activeReference = null;
 
     #[Vich\UploadableField(
         mapping: 'settings',
@@ -184,6 +189,30 @@ class Settings
         return $this;
     }
 
+    public function getLongitude(): ?string
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?string $longitude): self
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?string
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(?string $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
     public function getFacebookAddress(): ?string
     {
         return $this->facebookAddress;
@@ -244,18 +273,6 @@ class Settings
         return $this;
     }
 
-    public function isActiveReview(): ?bool
-    {
-        return $this->activeReview;
-    }
-
-    public function setActiveReview(?bool $activeReview): self
-    {
-        $this->activeReview = $activeReview;
-
-        return $this;
-    }
-
     public function isActiveBlog(): ?bool
     {
         return $this->activeBlog;
@@ -268,26 +285,14 @@ class Settings
         return $this;
     }
 
-    public function isActiveAchieve(): ?bool
+    public function isActiveReference(): ?bool
     {
-        return $this->activeAchieve;
+        return $this->activeReference;
     }
 
-    public function setActiveAchieve(?bool $activeAchieve): self
+    public function setActiveReference(?bool $activeReference): self
     {
-        $this->activeAchieve = $activeAchieve;
-
-        return $this;
-    }
-
-    public function isActiveTeam(): ?bool
-    {
-        return $this->activeTeam;
-    }
-
-    public function setActiveTeam(?bool $activeTeam): self
-    {
-        $this->activeTeam = $activeTeam;
+        $this->activeReference = $activeReference;
 
         return $this;
     }

@@ -1,10 +1,93 @@
-{% extends 'form_div_layout.html.twig' %}
+{% extends 'ui/__base.html.twig' %}
 
-{% block form_row %}
+{% set settings = config.get %}
 
+{% block title %}Maintenance{% endblock %}
+
+{% block app_navbar %}
+    <section class="view intro-2" style="background-image: url({{ asset('assets/images/architecture.jpg') }}); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+        <div class="mask rgba-black-strong">
+            <div class="container h-100 d-flex justify-content-center align-items-center">
+                <div class="row pt-5 mt-3">
+                    <div class="col-md-12 wow fadeIn mb-3">
+                        <div class="text-center white-text">
+                            <ul class="list-unstyled ">
+                                <li>
+                                    <h1 class="display-3 mt-md-5 mt-lg-0 mb-5 white-text wow fadeIn"
+                                        data-wow-delay="0.3s">
+                                        <strong class="font-weight-bold text-uppercase">Site en maintenance</strong>
+                                    </h1>
+                                </li>
+                                <li>
+                                    <h4 class="white-text description mb-4 wow fadeIn" data-wow-delay="0.4s">S'il vous plaît restez à l'écoute !</h4>
+
+                                    {% if settings.facebookAddress %}
+                                        <a href="{{ settings.facebookAddress }}" class="p-2 m-2 fa-lg fb-ic" target="_blank">
+                                            <i class="fab fa-facebook-f white-text"> </i>
+                                        </a>
+                                    {% endif %}
+
+                                    {% if settings.twitterAddress %}
+                                        <a href="{{ settings.twitterAddress }}" class="p-2 m-2 fa-lg tw-ic" target="_blank">
+                                            <i class="fab fa-twitter white-text"> </i>
+                                        </a>
+                                    {% endif %}
+
+                                    {% if settings.youtubeAddress %}
+                                        <a href="{{ settings.youtubeAddress }}" class="p-2 m-2 fa-lg yt-ic" target="_blank">
+                                            <i class="fab fa-youtube white-text"> </i>
+                                        </a>
+                                    {% endif %}
+
+                                    {% if settings.instagramAddress %}
+                                        <a href="{{ settings.instagramAddress }}" class="p-2 m-2 fa-lg ins-ic" target="_blank">
+                                            <i class="fab fa-instagram white-text"> </i>
+                                        </a>
+                                    {% endif %}
+
+                                    {% if settings.linkedinAddress %}
+                                        <a href="{{ settings.linkedinAddress }}" class="p-2 m-2 fa-lg li-ic" target="_blank">
+                                            <i class="fab fa-linkedin-in white-text"> </i>
+                                        </a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
 
-{% block choice_widget_collapsed %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        html,
+        body,
+        header,
+        .view {
+            height: 100%;
+        }
+        @media (max-width: 740px) {
+            html,
+            body,
+            header,
+            .view {
+                height: 1000px;
+            }
+        }
+        @media (min-width: 800px) and (max-width: 850px) {
+            html,
+            body,
+            header,
+            .view {
+                height: 600px;
+            }
+        }
 
+        .rgba-black-strong, .rgba-black-strong:after {
+            background-color: rgba(30, 36, 62, 0.9)
+        }
+    </style>
 {% endblock %}
-

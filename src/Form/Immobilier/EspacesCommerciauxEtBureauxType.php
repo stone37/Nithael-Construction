@@ -12,35 +12,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EspacesCommerciauxEtBureauxType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('type', ChoiceType::class, [
-                'choices' => [
-                    'Vente' => Advert::TYPE_OFFER,
-                    'Location' => Advert::TYPE_LOCATION,
-                    'Recherche' => Advert::TYPE_RESEARCH
-                ],
-                'expanded' => true,
-                'multiple' => false,
-                'label' => 'Type d\'annonce'
-            ])
             ->add('surface', IntegerType::class, ['label' => 'Surface (m²)'])
-            ->add('immobilierState', ImmobilierStateChoiceType::class, [
-                'expanded' => true,
-                'multiple' => false,
-                'label' => 'État'
-            ])
-            ->add('access', ImmobilierAccessChoiceType::class, [
-                'choice_attr' => function ($choice, $key, $value) {
-                    return ['class' => 'form-check-input filled-in'];
-                },
-                'label' => 'Accès (facultatif)',
-                'placeholder' => 'Accès (facultatif)',
-                'expanded' => true,
-                'multiple' => true,
-                'required' => false
-            ])
             ->add('dateConstruction', ImmobilierYearChoiceType::class, [
                 'label' => 'Date de construction (facultatif)',
                 'attr' => ['class' => 'mdb-select md-outline md-form dropdown-primary'],
@@ -49,53 +24,13 @@ class EspacesCommerciauxEtBureauxType extends AbstractType
             ])
             ->add('standing', ImmobilierStandingChoiceType::class, [
                 'label' => 'Standing (facultatif)',
-                'expanded' => true,
-                'multiple' => false,
+                'attr' => ['class' => 'mdb-select md-outline md-form dropdown-primary'],
+                'placeholder' => 'Standing (facultatif)',
                 'required' => false
-            ])
-            ->add('serviceInclus', ImmobilierServiceChoiceType::class, [
-                'choice_attr' => function($choice, $key, $value) {
-                    return ['class' => 'form-check-input filled-in'];
-                },
-                'label' => 'Services inclus (facultatif)',
-                'placeholder' => 'Services inclus (facultatif)',
-                'required' => false,
-                'expanded' => true,
-                'multiple' => true
-            ])
-            ->add('exterior', ImmobilierExteriorChoiceType::class, [
-                'choice_attr' => function ($choice, $key, $value) {
-                    return ['class' => 'form-check-input filled-in'];
-                },
-                'label' => 'Caractéristiques extérieures (facultatif)',
-                'placeholder' => 'Caractéristiques extérieures (facultatif)',
-                'required' => false,
-                'expanded' => true,
-                'multiple' => true
-            ])
-            ->add('interior', ImmobilierInteriorChoiceType::class, [
-                'choice_attr' => function ($choice, $key, $value) {
-                    return ['class' => 'form-check-input filled-in'];
-                },
-                'label' => 'Intérieur (facultatif)',
-                'placeholder' => 'Intérieur (facultatif)',
-                'required' => false,
-                'expanded' => true,
-                'multiple' => true
-            ])
-            ->add('proximite', ImmobilierProximiteChoiceType::class, [
-                'choice_attr' => function ($choice, $key, $value) {
-                    return ['class' => 'form-check-input filled-in'];
-                },
-                'label' => 'Proximité (facultatif)',
-                'placeholder' => 'Proximité (facultatif)',
-                'required' => false,
-                'expanded' => true,
-                'multiple' => true
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => ['Default', 'ESPACE_COMMERCIAUX']

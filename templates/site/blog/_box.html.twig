@@ -1,10 +1,36 @@
-{% extends 'site/layout.html.twig' %}
+{% set image_state = vich_uploader_asset(post, 'file') %}
 
-{% block app_intro %}
-
-{% endblock %}
-
-{% block title %}
-
-{% endblock %}
+<div class="card mb-4 wow fadeInUp" data-wow-delay="0.3s">
+    <div class="view overlay">
+        {% if image_state %}
+            <img src="{{ post|image_url('blog') }}" class="card-img-top" alt="Post image" />
+        {% else %}
+            <img src="{{ asset('assets/images/no_image.png')|imagine_filter('blog') }}" class="card-img-top" alt="Post image" />
+        {% endif %}
+        <a><div class="mask rgba-black-slight"></div></a>
+    </div>
+    <div class="card-body p-3">
+        <h3 class="h4-responsive my-2">
+            <a href="{{ path('app_blog_show', {'slug': post.slug}) }}" class="link"><strong class="font-weight-bold text-dark">{{ post.title }}</strong></a>
+        </h3>
+        <div class="d-flex justify-content-start my-3">
+            <div class="date small-9">
+                <i class="fas fa-calendar-day text-secondary mr-1" style="position: relative; bottom: 2px;"></i>
+                {{ post.createdAt|format_datetime(pattern="dd MMM yyyy") }}
+            </div>
+            {% if post.category|length > 0 %}
+                <div class="category small-9 ml-4">
+                    <i class="fas fa-folder text-secondary mr-1"></i>
+                    <a href="{{ path('app_blog_category', {'slug': post.category.slug}) }}" class="link">{{ post.category.name }}</a>
+                </div>
+            {% endif %}
+        </div>
+        <p class="text-dark mb-3">{{ post.content|u.truncate(330, '...')|raw }}</p>
+        <p class="mb-0 font-weight-bold">
+            <a href="{{ path('app_blog_show', {'slug': post.slug}) }}" class="btn btn-primary btn-md z-depth-0">
+                Lire la suite <i class="fas fa-angle-right ml-1"></i>
+            </a>
+        </p>
+    </div>
+</div>
 

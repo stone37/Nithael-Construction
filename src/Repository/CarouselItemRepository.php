@@ -41,9 +41,13 @@ class CarouselItemRepository extends ServiceEntityRepository
 
     public function queryAll(): array
     {
-        return $this->createQueryBuilder('c')
-            ->where('c.enabled = true')
-            ->orderBy('c.position', 'ASC')
+        return $this->createQueryBuilder('carousel_item')
+            ->leftJoin('carousel_item.advert', 'advert')
+            ->leftJoin('advert.pictures', 'pictures')
+            ->addSelect('advert')
+            ->addSelect('pictures')
+            ->where('carousel_item.enabled = true')
+            ->orderBy('carousel_item.position', 'ASC')
             ->getQuery()
             ->getResult();
     }

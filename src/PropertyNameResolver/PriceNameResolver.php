@@ -4,7 +4,7 @@ namespace App\PropertyNameResolver;
 
 class PriceNameResolver
 {
-    public function __construct(private string $pricePropertyPrefix)
+    public function __construct(private readonly string $pricePropertyPrefix)
     {
     }
 

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Data\AdminCrudData;
-use App\Entity\Admin;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin')]
 class AdminController extends CrudController
 {
-    protected string $entity = Admin::class;
+    protected string $entity = User::class;
     protected string $templatePath = 'admin';
     protected string $routePrefix = 'app_admin_admin';
     protected string $createFlashMessage = 'Un compte admin a été crée';
@@ -32,13 +32,13 @@ class AdminController extends CrudController
     public function create(UserPasswordHasherInterface $hasher): Response
     {
         $data = new AdminCrudData($hasher);
-        $data->entity = new Admin();
+        $data->entity = new User();
 
         return $this->crudNew($data);
     }
 
     #[Route(path: '/admins/{id}/edit', name: 'app_admin_admin_edit', requirements: ['id' => '\d+'])]
-    public function edit(Admin $admin, UserPasswordHasherInterface $hasher): Response
+    public function edit(User $admin, UserPasswordHasherInterface $hasher): Response
     {
         $data = AdminCrudData::makeFromAdmin($admin, $hasher);
 
@@ -46,9 +46,9 @@ class AdminController extends CrudController
     }
 
     #[Route(path: '/admins/{id}/delete', name: 'app_admin_admin_delete', requirements: ['id' => '\d+'])]
-    public function delete(Admin $admin): RedirectResponse|JsonResponse
+    public function delete(User $admin, UserPasswordHasherInterface $hasher): RedirectResponse|JsonResponse
     {
-        $data = new AdminCrudData();
+        $data = new AdminCrudData($hasher);
         $data->entity = $admin;
 
         return $this->crudDelete($data);

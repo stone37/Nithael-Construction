@@ -1,0 +1,23 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Édition d'une annonce ({{ advert.category.name }}) | Annonces | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {{ include('admin/advert/edit/_header.html.twig') }}
+
+    {{ include('admin/advert/edit/_content.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/jquery.dm-uploader.min.js'}) }}
+
+    <script type="text/javascript" defer>
+        window.advert['ADVERT_ID'] = '{{ advert.id }}';
+        window.advert['ADVERT_IMAGE_NBR'] = parseInt('{{ advert.pictures|length }}');
+    </script>
+
+    {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/admin/advert_edit.js'}) }}
+{% endblock %}
+

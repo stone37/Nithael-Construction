@@ -2,8 +2,8 @@
 
 namespace App\Data;
 
-use App\Entity\Admin;
-use App\Form\AdminType;
+use App\Entity\User;
+use App\Form\RegistrationAdminType;
 use JetBrains\PhpStorm\Pure;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -26,32 +26,27 @@ class AdminCrudData implements CrudDataInterface
     public ?string $email = null;
 
     #[Assert\NotBlank]
-    #[Assert\Length(min: 10, max: 180)]
-    public ?string $phone = null;
-
-    #[Assert\NotBlank]
     public array $roles = ['ROLE_ADMIN'];
 
     public ?string $plainPassword = null;
 
     public ?bool $isVerified = true;
 
-    public ?Admin $entity;
+    public ?User $entity;
 
     public function __construct(private UserPasswordHasherInterface $passwordHasher)
     {
     }
 
-    #[Pure] public static function makeFromAdmin(Admin $admin, UserPasswordHasherInterface $passwordHasher): self
+    #[Pure] public static function makeFromAdmin(User $admin, UserPasswordHasherInterface $passwordHasher): self
     {
         $data = new self($passwordHasher);
         $data->id = $admin->getId();
         $data->firstname = $admin->getFirstname();
         $data->lastname = $admin->getLastname();
         $data->email = $admin->getEmail();
-        $data->phone = $admin->getPhone();
         $data->roles = $admin->getRoles();
-        $data->isVerified = $admin->isVerified();
+        $data->isVerified = $admin->getIsVerified();
         $data->entity = $admin;
 
         return $data;
@@ -64,7 +59,7 @@ class AdminCrudData implements CrudDataInterface
 
     public function getFormClass(): string
     {
-        return AdminType::class;
+        return RegistrationAdminType::class;
     }
 
     public function hydrate(): void
@@ -73,7 +68,6 @@ class AdminCrudData implements CrudDataInterface
             ->setFirstname($this->firstname)
             ->setLastname($this->lastname)
             ->setEmail($this->email)
-            ->setPhone($this->phone)
             ->setRoles($this->roles)
             ->setIsVerified($this->isVerified)
             ->setPassword($this->plainPassword ? $this->passwordHasher->hashPassword($this->entity, $this->plainPassword) : '');

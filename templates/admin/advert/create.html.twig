@@ -1,0 +1,16 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Nouvelle annonce ({{ advert.category.name }}) | Annonces | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {{ include('admin/advert/create/_header.html.twig') }}
+
+    {{ include('admin/advert/create/_content.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/jquery.dm-uploader.min.js'}) }}
+    {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/admin/advert_create.js'}) }}
+{% endblock %}

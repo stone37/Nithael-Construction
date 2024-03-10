@@ -1,0 +1,51 @@
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body p-3">
+                <h4 class="h4-responsive font-weight-bold text-dark mb-3">Détails</h4>
+                <table class="table table-sm table-bordered table-responsive-sm table-responsive-md">
+                    <tbody>
+                    <tr>
+                        <td class="table-dark text-center font-weight-normal">Id</td>
+                        <td class="text-center font-weight-normal">{{ advert.id }}</td>
+                        <td class="table-dark text-center font-weight-normal">Position</td>
+                        <td class="text-center font-weight-normal">{{ advert.position }}</td>
+                        <td class="table-dark text-center font-weight-normal">Type</td>
+                        <td class="text-center font-weight-normal">{{ advert.type }}</td>
+                    </tr>
+                    <tr>
+                        <td class="table-dark text-center font-weight-normal">Prix</td>
+                        <td class="text-center font-weight-normal">
+                            {% if advert.price %}
+                                {{ advert.price|format_currency('XOF') }}
+                            {% else %}
+                                Sur demande
+                            {% endif %}
+                        </td>
+                        <td class="table-dark text-center font-weight-normal">Ville</td>
+                        <td class="text-center font-weight-normal">{{ advert.city }}</td>
+                        <td class="table-dark text-center font-weight-normal">Quartier ou commune</td>
+                        <td class="text-center font-weight-normal">{{ advert.district }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="table table-sm table-bordered table-responsive-sm table-responsive-md">
+                    <tbody>
+                        <tr>
+                            <td class="table-dark text-center font-weight-normal">Nombre de vue</td>
+                            <td class="font-weight-normal">{{ advert.numberOfViews }}</td>
+                        </tr>
+                        <tr>
+                            <td class="table-dark text-center font-weight-normal">Titre</td>
+                            <td class="font-weight-normal">{{ advert.title }}</td>
+                        </tr>
+                        <tr>
+                            <td class="table-dark text-center font-weight-normal">Description</td>
+                            <td class="font-weight-normal">{{ advert.description }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

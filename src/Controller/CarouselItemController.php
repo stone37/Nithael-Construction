@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CarouselItemController extends AbstractController
 {
-    public function __construct(private CarouselItemRepository $repository)
+    public function __construct(private readonly CarouselItemRepository $repository)
     {
     }
 

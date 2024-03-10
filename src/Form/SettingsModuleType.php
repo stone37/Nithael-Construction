@@ -12,10 +12,8 @@ class SettingsModuleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('activeReview', SwitchType::class, ['label' => 'Activé le module de témoignage'])
-            ->add('activeBlog', SwitchType::class, ['label' => 'Activé le module de blog'])
-            ->add('activeAchieve', SwitchType::class, ['label' => 'Activé le module de réalisation'])
-            ->add('activeTeam', SwitchType::class, ['label' => 'Activé le module de membre de l\'équipe']);
+            ->add('activeReference', SwitchType::class, ['label' => 'Activé le module de reference'])
+            ->add('activeBlog', SwitchType::class, ['label' => 'Activé le module de blog']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

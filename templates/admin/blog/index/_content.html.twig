@@ -1,7 +1,7 @@
 <div class="row mb-4">
     <div class="col-12 d-flex justify-content-center justify-content-md-between">
         <div id="entity-list-delete-bulk-btn" class="mr-3 d-none">
-            <a id="entity-bulk-delete-btn" class="btn btn-danger btn-md" data-url="{{ path('app_admin_blog_bulk_delete') }}">
+            <a id="entity-bulk-delete-btn" class="btn btn-danger btn-md z-depth-0" data-url="{{ path('app_admin_blog_bulk_delete') }}">
                 <i class="fas fa-trash mr-1"></i> Supprimer
             </a>
         </div>
@@ -70,7 +70,7 @@
                                     <a href="{{ path('app_admin_blog_edit', {'id': row.id}) }}" class="dropdown-item">
                                         <i class="fas fa-pencil-alt mr-1"></i> Éditer
                                     </a>
-                                    <a class="dropdown-item entity-delete-btn" data-id="{{ row.id }}" data-url="{{ path('app_admin_achieve_delete', {'id': row.id}) }}">
+                                    <a class="dropdown-item entity-delete-btn" data-id="{{ row.id }}" data-url="{{ path('app_admin_blog_delete', {'id': row.id}) }}">
                                         <i class="fas fa-trash mr-1 text-danger"></i> Supprimer
                                     </a>
                                 </div>

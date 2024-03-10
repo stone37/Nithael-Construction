@@ -1,7 +1,7 @@
 <div class="row mb-4">
     <div class="col-12 d-flex justify-content-center justify-content-md-between">
         <div id="entity-list-delete-bulk-btn" class="mr-3 d-none">
-            <a id="entity-bulk-delete-btn" class="btn btn-danger btn-md" data-url="{{ path('app_admin_carousel_bulk_delete') }}">
+            <a id="entity-bulk-delete-btn" class="btn btn-danger btn-md z-depth-0" data-url="{{ path('app_admin_carousel_bulk_delete') }}">
                 <i class="fas fa-trash mr-1"></i> Supprimer
             </a>
         </div>
@@ -26,7 +26,7 @@
                         </div>
                     </th>
                     <th scope="col" class="font-weight-stone-500 text-center">Titre</th>
-                    <th scope="col" class="font-weight-stone-500 text-center">Url</th>
+                    <th scope="col" class="font-weight-stone-500 text-center">Annonce</th>
                     <th scope="col" class="font-weight-stone-500 text-center">Image</th>
                     <th scope="col" class="font-weight-stone-500 text-center">Status</th>
                     <th scope="col" class="font-weight-stone-500 text-center"></th>
@@ -43,7 +43,9 @@
                             </div>
                         </td>
                         <td class="text-center">{{ row.title }}</td>
-                        <td class="text-center">{{ row.url }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('app_admin_advert_show', {'id': row.advert.id}) }}" class="link">{{ row.advert.title }}</a>
+                        </td>
                         <td class="text-center">
                             {% if vich_uploader_asset(row, 'file') %}
                                 <img src="{{ vich_uploader_asset(row, 'file') }}" class="img-fluid table-img" alt="" />

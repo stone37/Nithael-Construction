@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategoryChoiceType extends AbstractType
 {
-    public function __construct(private CategoryRepository $repository)
+    public function __construct(private readonly CategoryRepository $repository)
     {
     }
 

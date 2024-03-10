@@ -23,9 +23,7 @@ final class MaintenanceConfigurationFactory
         }
 
         $maintenanceConfiguration->setEnabled(true);
-        $maintenanceConfiguration = $maintenanceConfiguration->map($this->configurationFileManager->parseMaintenanceYaml());
-
-        return $maintenanceConfiguration;
+        return $maintenanceConfiguration->map($this->configurationFileManager->parseMaintenanceYaml());
     }
 }
 

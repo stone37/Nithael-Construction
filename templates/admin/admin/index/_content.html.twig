@@ -1,7 +1,7 @@
 <div class="row mb-4">
     <div class="col-12 d-flex justify-content-center justify-content-md-between">
         <div id="entity-list-delete-bulk-btn" class="mr-3 d-none">
-            <a id="entity-bulk-delete-btn" class="btn btn-danger btn-md" data-url="{{ path('app_admin_admin_bulk_delete') }}">
+            <a id="entity-bulk-delete-btn" class="btn btn-danger btn-md z-depth-0" data-url="{{ path('app_admin_admin_bulk_delete') }}">
                 <i class="fas fa-trash mr-1"></i> Supprimer
             </a>
         </div>
@@ -26,7 +26,6 @@
                         </th>
                         <th scope="col" class="font-weight-stone-500 text-center">Nom et prénom</th>
                         <th scope="col" class="font-weight-stone-500 text-center">Email</th>
-                        <th scope="col" class="font-weight-stone-500 text-center">Téléphone</th>
                         <th scope="col" class="font-weight-stone-500 text-center">Roles</th>
                         <th scope="col" class="font-weight-stone-500 text-center">Status</th>
                         <th scope="col" class="font-weight-stone-500 text-center"></th>
@@ -44,7 +43,6 @@
                         </td>
                         <td class="text-center">{{ row.lastname|capitalize }} {{ row.firstname|capitalize }}</td>
                         <td class="text-center">{{ row.email }}</td>
-                        <td class="text-center">{{ row.phone }}</td>
                         <td class="text-center">
                             {% for role in row.roles %}
                                 {% if role != 'ROLE_USER' %}
@@ -54,11 +52,11 @@
                         </td>
                         <td class="text-center">
                             {% if row.isVerified %}
-                                <span class="badge badge-success">
+                                <span class="badge badge-success z-depth-0">
                                     <i class="fas fa-check mr-1"></i> Actif
                                 </span>
                             {% else %}
-                                <span class="badge badge-danger">
+                                <span class="badge badge-danger z-depth-0">
                                     <i class="fas fa-times mr-1"></i> Inactif
                                 </span>
                             {% endif %}

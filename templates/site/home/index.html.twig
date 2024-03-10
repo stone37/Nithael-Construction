@@ -1,0 +1,23 @@
+{% extends 'site/layout.html.twig' %}
+
+{% block title 'Être chez soi, devient une réalité' %}
+
+{% block meta %}
+    {% set content = "Votre partenaire de confiance pour des projets immobiliers exceptionnels. De la promotion immobilière à la construction, en passant par la vente de terrains et de maisons, notre équipe dévouée vous accompagne à chaque étape. Avec notre expertise diversifiée et notre engagement envers l'excellence, nous transformons vos idées en réalité." %}
+    <meta name="description" content="{{ content }}"/>
+    <meta property="og:description" content="{{ content }}" />
+{% endblock %}
+
+{% block app_intro %}
+    {{ render(controller('App\\Controller\\CarouselItemController::index')) }}
+{% endblock %}
+
+{% block app_body %}
+    {{ include('site/home/index/content.html.twig') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {{ include('ui/_stylesheets.html.twig', {'path': 'assets/css/home.css'}) }}
+{% endblock %}

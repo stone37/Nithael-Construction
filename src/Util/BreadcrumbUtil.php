@@ -8,8 +8,8 @@ use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 class BreadcrumbUtil
 {
     public function __construct(
-        private Breadcrumbs $breadcrumbs,
-        private RouterInterface $router
+        private readonly Breadcrumbs $breadcrumbs,
+        private readonly RouterInterface $router
     )
     {
     }

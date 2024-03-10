@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\Type;
 class PriceFilterType extends AbstractFilterType
 {
     public function __construct(
-        private PriceNameResolver $priceNameResolver
+        private readonly PriceNameResolver $priceNameResolver
     )
     {
     }
@@ -22,7 +22,7 @@ class PriceFilterType extends AbstractFilterType
     {
         $builder
             ->add($this->priceNameResolver->resolveMinPriceName(), IntegerType::class, [
-                'label' => 'Min',
+                'label' => 'Prix Min',
                 'required' => false,
                 'attr' => ['class' => 'advert_filter_price_min', 'placeholder' => 'De'],
                 'constraints' => [
@@ -36,7 +36,7 @@ class PriceFilterType extends AbstractFilterType
                 ],
             ])
             ->add($this->priceNameResolver->resolveMaxPriceName(), IntegerType::class, [
-                'label' => 'Max',
+                'label' => 'Prix Max',
                 'required' => false,
                 'attr' => ['class' => 'advert_filter_price_max', 'placeholder' => 'à'],
                 'constraints' => [

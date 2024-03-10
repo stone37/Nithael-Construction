@@ -1,0 +1,29 @@
+{% import 'ui/macro/buttons.html.twig' as buttons %}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-end">
+            {% set path = path('app_advert_show', {'slug': advert.slug}) %}
+            {{ buttons.default(path, 'Afficher l\'annonce sur le site', 'app-entity-view-btn', 'fas fa-eye mr-1', 'btn-secondary btn-md') }}
+        </div>
+    </div>
+</div>
+
+{{ include('admin/advert/show/_details.html.twig') }}
+{{ include('admin/advert/show/_category.html.twig') }}
+{{ include('admin/advert/show/_moreDetails.html.twig') }}
+{{ include('admin/advert/show/_date.html.twig') }}
+{{ include('admin/advert/show/_image.html.twig') }}
+
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="d-flex justify-content-end mb-5 mt-4">
+            <div class="text-center mr-3">
+                {% set path = path('app_admin_advert_index') %}
+
+                {{ buttons.default(path, 'Retour à la liste', 'app-entity-list-btn', 'fas fa-angle-left', 'btn-outline-primary') }}
+            </div>
+        </div>
+    </div>
+</div>
+

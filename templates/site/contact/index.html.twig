@@ -1,0 +1,38 @@
+{% extends 'site/layout.html.twig' %}
+
+{% block title 'Contact' %}
+
+{% set settings = config.get %}
+
+{% block meta %}
+    {% set content = "Contactez nous pour plus d'information ou pour des demandes spécifiques" %}
+    <meta name="description" content="{{ content }}"/>
+    <meta property="og:description" content="{{ content }}" />
+{% endblock %}
+
+{% block app_intro %}
+    <section class="bc container">
+        {{ wo_render_breadcrumbs({
+            viewTemplate: 'ui/_breadcrumb.html.twig',
+            listClass: 'breadcrumb',
+            itemClass: 'breadcrumb-item',
+            separator: '>',
+            separatorClass: 'fas fa-angle-right'}) }}
+    </section>
+{% endblock %}
+
+{% block app_body %}
+    {{ include('site/contact/index/_content.html.twig') }}
+{% endblock %}
+
+{% block app_newsletter %}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" defer>
+        const route = '{{ path('app_contact_index') }}';
+    </script>
+    {{ include('ui/_javascripts_cdn.html.twig', {'path': 'https://www.google.com/recaptcha/api.js?render=6LfSnr0UAAAAAGgVbAAZQdtn8UdJ6CAMTf79myG_'}) }}
+    {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/recaptcha.js'}) }}
+{% endblock %}

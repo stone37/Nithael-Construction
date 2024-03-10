@@ -17,9 +17,9 @@ use Symfony\Component\Mime\Email;
 class ContactService
 {
     public function __construct(
-        private ContactRequestRepository $repository,
-        private EntityManagerInterface $em,
-        private MailerInterface $mailer
+        private readonly ContactRequestRepository $repository,
+        private readonly EntityManagerInterface   $em,
+        private readonly MailerInterface $mailer
     )
     {
     }
@@ -47,14 +47,12 @@ class ContactService
 
         $message = (new Email())
             ->text($data->content)
-            ->subject("Hotel particulier::Contact : {$data->name} ({$data->phone})")
-            ->from('noreply@oblackmarket.com')
+            ->subject("Nithael Construction::Contact : {$data->name} ({$data->phone})")
+            ->from('noreply@nithaelconstruction.com')
             ->replyTo(new Address($data->email, $data->name))
-            ->to('contact@oblackmarket.com');
+            ->to('contact@nithaelconstruction.com');
 
         $this->mailer->send($message);
     }
 }
-
-
 

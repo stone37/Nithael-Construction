@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: PostRepository::class)]
@@ -24,6 +25,8 @@ class Post
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 180)]
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $title = null;
 
@@ -31,6 +34,8 @@ class Post
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $slug = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 10)]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
@@ -50,8 +55,8 @@ class Post
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne(targetEntity: Admin::class)]
-    private ?Admin $author = null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private ?User $author = null;
 
     public function getId(): ?int
     {
@@ -132,12 +137,12 @@ class Post
         return $this;
     }
 
-    public function getAuthor(): ?Admin
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?Admin $author): self
+    public function setAuthor(?User $author): self
     {
         $this->author = $author;
 

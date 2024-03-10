@@ -9,14 +9,14 @@
         {{ form_widget(form.online) }}
     </div>
     <div class="col-12">
-        <div class="mt-3 mb-0">{{ form_label(form.content) }}</div>
+        <div class="mt-3 mb-0 font-weight-stone-500 small-9 text-dark">{{ form_label(form.content) }}</div>
         {{ form_widget(form.content) }}
     </div>
 </div>
 <div class="form-row mt-4 image-bulk-container">
     <div class="col-5 col-md-3 col-lg-2">
         <div class="file-field">
-            <div class="btn btn-mdb-color btn-md float-left">
+            <div class="btn btn-mdb-color btn-md z-depth-0 float-left">
                 <span>Choisir une image</span>
                 <input type="file" name="{{ form.file.vars.full_name }}" class="entity-image" />
             </div>
@@ -26,5 +26,3 @@
         <img src="{{ vich_uploader_asset(entity, 'file') }}" alt="" class="img-fluid img-thumbnail image-view" />
     </div>
 </div>
-
-

@@ -1,0 +1,241 @@
+<div id="slide-out" class="side-nav sn-bg-4 fixed">
+    <ul class="custom-scrollbar">
+        <li class="logo-sn waves-effect py-3">
+            <div class="text-center">
+                <a href="{{ path('app_admin_index') }}" class="pl-0">
+                    <img src="{{ asset('assets/images/logo/write.png') }}" style="width: 90px !important;" alt="Logo du site" />
+                </a>
+            </div>
+        </li>
+
+        {% set dashboard = isActive('app_admin_index') %}
+
+        {# blog #}
+        {% set blog_index = isActive('app_admin_blog_index') %}
+        {% set blog_new   = isActive('app_admin_blog_create') %}
+        {% set blog_edit  = isActive('app_admin_blog_edit') %}
+        {# blog #}
+
+        {# advert #}
+        {% set advert_index = isActive('app_admin_advert_index') %}
+        {% set advert_new   = isActive('app_admin_advert_create') %}
+        {% set advert_edit  = isActive('app_admin_advert_edit') %}
+        {# advert #}
+
+        {# advert category #}
+        {% set advert_category_index = isActive('app_admin_advert_category_index') %}
+        {% set advert_category_new   = isActive('app_admin_advert_category_create') %}
+        {% set advert_category_edit  = isActive('app_admin_advert_category_edit') %}
+        {# advert category #}
+
+        {# category #}
+        {% set category_index = isActive('app_admin_category_index') %}
+        {% set category_new   = isActive('app_admin_category_create') %}
+        {% set category_edit  = isActive('app_admin_category_edit') %}
+        {# category #}
+
+        {# emailing #}
+        {% set type = '0' %}
+        {% set emailing_index = isActive('app_admin_emailing_index') %}
+        {% set emailing_new = isActive('app_admin_emailing_create') %}
+        {% set emailing_resend = isActive('app_admin_emailing_resend') %}
+        {% set emailing_newsletter = isActive('app_admin_emailing_newsletter') %}
+        {% set newsletter = isActive('app_admin_emailing_newsletters') %}
+        {# emailing #}
+
+        {# reference #}
+        {% set reference_index = isActive('app_admin_reference_index') %}
+        {% set reference_new   = isActive('app_admin_reference_create') %}
+        {% set reference_edit  = isActive('app_admin_reference_edit') %}
+        {# reference #}
+
+        {# carousel #}
+        {% set carousel_index = isActive('app_admin_carousel_index') %}
+        {% set carousel_new   = isActive('app_admin_carousel_create') %}
+        {% set carousel_edit  = isActive('app_admin_carousel_edit') %}
+        {# carousel #}
+
+        {# admin #}
+        {% set admin_index = isActive('app_admin_admin_index') %}
+        {% set admin_new   = isActive('app_admin_admin_create') %}
+        {% set admin_edit  = isActive('app_admin_admin_edit') %}
+        {# admin #}
+
+        {# maintenance #}
+        {% set maintenance_index = isActive('app_admin_maintenance_index') %}
+        {# maintenance #}
+
+        {# settings #}
+        {% set s_index = isActive('app_admin_settings_index') %}
+        {% set s_module_index = isActive('app_admin_settings_module_index') %}
+        {# settings #}
+
+
+        <li>
+            <ul class="collapsible collapsible-accordion">
+                <li>
+                    <a href="{{ path('app_admin_index') }}" class="waves-effect {% if dashboard %}active{% endif %} mb-2">
+                        <i class="sv-slim-icon fas fa-th-large"></i>
+                        Tableau de bord
+                    </a>
+                </li>
+                <li>
+                    <a class="collapsible-header waves-effect arrow-r
+                        {% if advert_category_index or advert_category_new or advert_category_edit %}active{% endif %}">
+                        <i class="sv-slim-icon fas fa-folder"></i> Catégories
+                        <i class="fas fa-angle-down rotate-icon"></i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="{{ path('app_admin_advert_category_index') }}" class="waves-effect
+                                     {% if advert_category_index or advert_category_new or advert_category_edit %}active{% endif %}">
+                                    <span class="sv-normal">Tous les catégories</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a class="collapsible-header waves-effect arrow-r
+                        {% if advert_index or advert_new or advert_edit %}active{% endif %}">
+                        <i class="sv-slim-icon fas fa-clipboard"></i> Annonces
+                        <i class="fas fa-angle-down rotate-icon"></i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="{{ path('app_admin_advert_index') }}" class="waves-effect
+                                     {% if advert_index or advert_new or advert_edit %}active{% endif %}">
+                                    <span class="sv-normal">Tous les annonces</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a class="collapsible-header waves-effect arrow-r
+                        {% if category_index or category_edit or category_new or
+                              blog_index or blog_edit or blog_new %}active{% endif %}">
+                        <i class="sv-slim-icon fas fa-newspaper"></i> Blog
+                        <i class="fas fa-angle-down rotate-icon"></i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="{{ path('app_admin_blog_index') }}" class="waves-effect
+                                    {% if blog_index or blog_edit or blog_new %}active{% endif %}">
+                                    <span class="sv-normal">Tous les articles</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_admin_category_index') }}" class="waves-effect
+                                    {% if category_index or category_edit or category_new %}active{% endif %}">
+                                    <span class="sv-normal">Tous les catégories</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a class="collapsible-header waves-effect arrow-r
+                        {% if reference_index or reference_new or reference_edit %}active{% endif %}">
+                        <i class="sv-slim-icon fas fa-align-left"></i> References
+                        <i class="fas fa-angle-down rotate-icon"></i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="{{ path('app_admin_reference_index') }}" class="waves-effect {% if reference_index or reference_new or reference_edit %}active{% endif %}">
+                                    <span class="sv-normal">Tous les references</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a class="collapsible-header waves-effect arrow-r
+                        {% if emailing_index or emailing_new or emailing_resend or
+                         emailing_newsletter or newsletter %}active{% endif %}">
+                        <i class="sv-slim-icon fas fa-paper-plane"></i> Emailing et newsletters
+                        <i class="fas fa-angle-down rotate-icon"></i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="{{ path('app_admin_emailing_index', {'type': 1}) }}" class="waves-effect
+                                    {% if (emailing_index and app.request.attributes.get('type') == 1) or
+                                    (emailing_resend and app.request.attributes.get('type') == 1) or
+                                    emailing_new  %}active{% endif %}">
+                                    <span class="sv-normal">Envoyer un email</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_admin_emailing_index', {'type': 2}) }}" class="waves-effect
+                                {% if (emailing_index and app.request.attributes.get('type') == 2) or
+                                    (emailing_resend and app.request.attributes.get('type') == 2) or
+                                    emailing_newsletter %}active{% endif %}">
+                                    <span class="sv-normal">Envoyer aux abonnés newsletter</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_admin_emailing_newsletters') }}" class="waves-effect
+                                 {% if newsletter %}active{% endif %}">
+                                    <span class="sv-normal">Abonnés de la newsletters</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-3">
+                    <a class="collapsible-header waves-effect arrow-r
+                        {% if admin_index or admin_new or admin_edit or s_module_index or s_index or
+                        maintenance_index or carousel_index or carousel_new or carousel_edit %}active{% endif %}">
+                        <i class="sv-slim-icon fas fa-cogs"></i> Configurations
+                        <i class="fas fa-angle-down rotate-icon"></i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="{{ path('app_admin_settings_index') }}" class="waves-effect
+                                    {% if s_index %}active{% endif %}">
+                                    <span class="sv-normal">Générale</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_admin_settings_module_index') }}" class="waves-effect
+                                    {% if s_module_index %}active{% endif %}">
+                                    <span class="sv-normal">Modules</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_admin_carousel_index') }}" class="waves-effect
+                                    {% if carousel_index or carousel_new or carousel_edit %}active{% endif %}">
+                                    <span class="sv-normal">Carousel d'accueil</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_admin_admin_index') }}" class="waves-effect
+                                    {% if admin_index or admin_new or admin_edit %}active{% endif %}">
+                                    <span class="sv-normal">Administrateurs</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_admin_maintenance_index') }}" class="waves-effect
+                                    {% if maintenance_index %}active{% endif %}">
+                                    <span class="sv-normal">Mise en maintenant</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div class="sidenav-bg mask-strong"></div>
+</div>
+
+
+
+
+

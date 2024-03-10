@@ -1,0 +1,12 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Annonces | {{ parent() }}{% endblock %}
+
+{% block app_body %}
+    {{ include('admin/advert/index/_header.html.twig') }}
+
+    {{ include('ui/_flashes_message.html.twig') }}
+
+    {{ include('admin/advert/index/_content.html.twig') }}
+{% endblock %}
+

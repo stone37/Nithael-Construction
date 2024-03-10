@@ -1,17 +1,56 @@
 <!DOCTYPE html>
-<html>
-    <head>
+<html lang="fr">
+    <head id="top-section">
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <title>{% block title %}{% endblock %} | Nithael construction</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        {% block meta '' %}
+        <meta property="og:title" content="{{ block('title') }}"/>
+        <meta property="og:site_name" content=""/>
+        <meta property="og:language" content="fr"/>
+        <meta property="og:country-name" content="Côte d'Ivoire"/>
+        <link rel="shortcut icon" href="{{ app.request.relativeUriForPath(asset('favicon.ico')) }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+
         {% block stylesheets %}
+            {{ include('ui/_stylesheets.html.twig', {'path': 'assets/css/bootstrap.min.css'}) }}
+            {{ include('ui/_stylesheets.html.twig', {'path': 'assets/css/app.min.css'}) }}
+            {{ include('ui/_stylesheets.html.twig', {'path': 'assets/css/style.css'}) }}
         {% endblock %}
 
         {% block javascripts %}
-{% block importmap %}{{ importmap('app') }}{% endblock %}
+            {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/jquery.min.js'}) }}
+            {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/popper.min.js'}) }}
+            {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/bootstrap.min.js'}) }}
+            {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/app.min.js'}) }}
+            {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/function.js'}) }}
+            {{ include('ui/_javascripts_cdn.html.twig', {'path': 'https://cdn.jsdelivr.net/npm/jquery.cookie-consent/dist/jquery.cookie-consent.min.js'}) }}
+            {{ include('ui/_javascripts.html.twig', {'path': 'assets/js/script.js'}) }}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="fixed-sn skin-light">
+        {% block app_flashes %}{{ include('ui/_flashes.html.twig') }}{% endblock %}
+        {{ include('ui/_loading.html.twig') }}
+
+        <header>
+            {% block app_navbar %}{% endblock %}
+            {% block app_intro %}{% endblock %}
+        </header>
+
+        <div>
+            {% block app_body %}{% endblock %}
+        </div>
+
+        {{ include('ui/_top_scroll.html.twig') }}
+        {{ include('ui/_confirmation.html.twig') }}
+        {{ include('ui/_cookieconsent.html.twig') }}
+
+        {% block app_newsletter %}
+            {{ include('site/newsletter/_subscribe.html.twig') }}
+        {% endblock %}
+        {{ include('ui/_footer.html.twig') }}
     </body>
 </html>
+
